@@ -202,6 +202,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         def route():
+            self.admin_origin()
             parsed = urlparse(self.path)
             files={'/participate/':'participate.html','/admin/participate.js':'participate.js','/admin':'index.html','/admin/':'index.html','/admin/app.js':'app.js','/admin/site-map.js':'site-map.js','/admin/site-reviews.js':'site-reviews.js','/admin/kakao-map.js':'kakao-map.js','/admin/osm-map.js':'osm-map.js','/admin/style.css':'style.css','/admin/demo-map.png':'demo-map.png','/admin/vendor/leaflet/leaflet.js':'vendor/leaflet/leaflet.js','/admin/vendor/leaflet/leaflet.css':'vendor/leaflet/leaflet.css'}
             if parsed.path in files:
@@ -242,6 +243,9 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         def route():
+            self.admin_origin()
+            if self.headers.get_content_type() != 'application/json':
+                raise ApiError(415, 'json_required')
             try:
                 size = int(self.headers.get('Content-Length', '0'))
             except ValueError:
