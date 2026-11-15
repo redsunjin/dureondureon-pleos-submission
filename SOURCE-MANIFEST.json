@@ -7,7 +7,19 @@
     },
     {
       "path": "README.md",
-      "sha256": "c47b58e604d6b02a87ed5ee523dc3c6d5d1d46fc35850e17e196d4081b94160a"
+      "sha256": "124a8f1449351fffaac0c3a90320d597611ae8c0142ab78a290333faf6895948"
+    },
+    {
+      "path": "REVIEWER_GUIDE.md",
+      "sha256": "31f61002f630858970683b4dbe7d07d9a232a7a3aea3aa90a60da8bb3a1b7f8a"
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "f4c3e9db732fa661c09988741954f70ce20d805458170010775238370ab4780f"
+    },
+    {
+      "path": "SUBMISSION.md",
+      "sha256": "043bea796cc2e77393928804da1b3a199890ed04473ac84c1bd84f649075c3f0"
     },
     {
       "path": "VALIDATION.md",
@@ -538,5 +550,8 @@
     "uiCandidatePatch": "docs/ui-candidate/changes.patch",
     "uiCandidateMerged": false,
     "uiCandidateSignedReleaseInstalled": false
-  }
+  },
+  "submittedCommit": "a60c96191074050de562e4ef8d2d24f8cea3478b",
+  "submittedTag": "submission-2026-11-15",
+  "postSubmissionDocumentation": true
 }

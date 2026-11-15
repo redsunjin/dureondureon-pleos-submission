@@ -2,21 +2,20 @@
 
 **서로 통하는 차, 함께 만드는 공간.** 차량들이 이동 의도와 참여 상태를 주고받고 순서대로 움직여 흩어진 빈틈을 모으는 Pleos 차량용 협력 주차 프로젝트입니다.
 
-현대자동차그룹 차량용 앱 개발 공모전 제출 준비를 위한 공개 소스 저장소입니다. 기술 프로젝트명은 Swarm Mobility OS입니다.
+현대자동차그룹 차량용 앱 개발 공모전 제출 자료를 공개한 저장소입니다. 기술 프로젝트명은 Swarm Mobility OS입니다.
 
-## 화면으로 보는 기능
+## 심사 자료 바로 확인
 
-웹 관제는 전체 구역·공간 상태를 살피고 선택 공간을 안내하는 역할, 차량 앱은 이동 요청을 확인하고 동의·협력 주차를 시연하는 역할입니다. 두 화면은 서로 다른 가상 모델이며 실제 주차장을 제어하는 하나의 통합 서비스로 연결하지 않았습니다.
+접수양식에 기재한 기준 커밋은 [`a60c96191074050de562e4ef8d2d24f8cea3478b`](https://github.com/redsunjin/dureondureon-pleos-submission/tree/a60c96191074050de562e4ef8d2d24f8cea3478b)입니다. [고정 태그 `submission-2026-11-15`](https://github.com/redsunjin/dureondureon-pleos-submission/tree/submission-2026-11-15)도 같은 커밋을 가리킵니다. 제출 이후의 안내 보강과 별도 수정 후보는 이 제출 스냅샷을 바꾸지 않습니다.
 
-**기존 웹 관제 구현** — 가상 3구역·18공간과 선택 상세 패널의 보존 캡처입니다. 배경은 제작한 가상 그림이며 과거 캡처의 숫자는 현재 운영 실적이 아닙니다.
+- [서명된 제출 APK 바로 다운로드](https://raw.githubusercontent.com/redsunjin/dureondureon-pleos-submission/a60c96191074050de562e4ef8d2d24f8cea3478b/apk/redsunjin_%EB%91%90%EB%9F%B0%EB%91%90%EB%9F%B0_release.apk) — 9,009,200바이트, 로컬 관제 서버 필요
+- [평가자 실행 안내](REVIEWER_GUIDE.md) — 장비 없는 재생과 Pleos 실행을 구분
+- [제출 파일·해시·버전 구분](SUBMISSION.md)
+- [2분 40초 시연 영상](https://github.com/redsunjin/dureondureon-pleos-submission/blob/a60c96191074050de562e4ef8d2d24f8cea3478b/media/dureondureon-demo-draft.mp4) — 가상 계산 재생 및 설명 영상
 
-![웹 관제 전체 배치](media/screens/web-parking-dashboard.png)
+아래는 **현재 제출 APK의 실제 실행 화면**입니다. 별도 UI 개선 후보와 구분해 주세요.
 
-**차량 앱 UI 개선 후보** — 2026-11-15 개발용 앱에서 직접 실행한 화면입니다. 현재 `apk/`의 서명 release와 루트 Android 소스는 이전 UI를 유지하며, 새 UI의 release는 서명·설치 확인 전입니다.
-
-![개선 앱 UI 후보 동의 화면](media/screens/02-awaiting-app.png)
-
-[상태별 캡처와 지도 출처·화면 역할](docs/screen-guide.md) · [개선 후보 변경분과 검증 범위](docs/ui-candidate/README.md)
+![현재 제출 서명 APK 실행 화면](media/signed-release-completed.png)
 
 ## 제출 APK
 
@@ -26,7 +25,7 @@
 - release build type, `debuggable=false`, RSA 3072 제출 전용 키로 서명. APK Signature Scheme v3 검증 통과.
 - 2026-11-15 Pleos Connect 2.1.0 에뮬레이터에 설치 성공, 앱 실행·상시 가상시연 안내·로컬 관제 연결·협력 주차 화면 진입, 4/5 시작 차단, 5/5 시작 후 공간 확보·후진·정렬 완료 확인.
 
-파일 접두어 `redsunjin`은 공개 GitHub 계정 식별자입니다. 개인 참가 신청서의 성명 표기와 파일명 접두어를 맞출 필요가 있으면 최종 접수 전에 변경해야 합니다. 실물 차량 검증은 수행하지 않았습니다. 키와 비밀번호는 공개하지 않습니다.
+파일 접두어 `redsunjin`은 공개 GitHub 계정 식별자입니다. 이미 접수한 APK 경로와 파일을 유지합니다. 공식 이름 형식과의 대응은 [제출 기록](SUBMISSION.md)에 설명했습니다. 실물 차량 검증은 수행하지 않았습니다. 키와 비밀번호는 공개하지 않습니다.
 
 ## 현재 구현
 
@@ -45,7 +44,7 @@
 - Python 3: 개발 기록은 Python 3.14. Python 부분은 표준 라이브러리 사용
 - JDK 17 호환 설정, Gradle 9.4.1 개발 기록, Android Gradle Plugin 8.13.2, Kotlin 2.3.0
 - Android compile/target SDK 35, min SDK 28
-- Pleos Connect 에뮬레이터 **2.1.0**, API 34 ARM64, 화면 **2560 × 1440**: 과거 개발 검증 환경
+- Pleos Connect 에뮬레이터 **2.1.0**, API 34 ARM64, 화면 **2560 × 1440**: 제출 APK 설치·실행 확인 환경
 - Pleos Vehicle SDK 2.3.2 / FusedLocation 1.1.3 / NaviHelper 3.0.5
 
 Android SDK·Gradle·의존성은 별도로 준비해야 합니다. 저장소에 Gradle wrapper나 SDK/cache, 키, `local.properties`를 넣지 않았습니다. SDK 경로는 로컬 환경에서 지정하세요. 첫 빌드에는 의존성 저장소 접근이 필요합니다. Pleos 개발 환경 사용 조건은 공급자 안내를 따릅니다.
@@ -106,11 +105,26 @@ Gradle 의존성이 이미 준비된 환경에서는 `--offline`을 추가할 �
 
 ## 시연 영상
 
-[2분 40초 영상 초안](media/dureondureon-demo-draft.mp4): 자막 포함 무음, 계산 결과 재생과 설명 카드로 구성했습니다. 새 release 후보 실행을 촬영한 영상은 아닙니다. 제작 시점 이후의 새 기능은 담겨 있지 않습니다. 최종 제출 전 문구와 전체 재생을 확인해야 합니다.
+[2분 40초 영상 초안](media/dureondureon-demo-draft.mp4): 자막 포함 무음, 계산 결과 재생과 설명 카드로 구성했습니다. 새 release 후보 실행을 촬영한 영상은 아닙니다. 제작 시점 이후의 새 기능은 담겨 있지 않습니다. 영상에 새 앱 UI가 촬영돼 있다고 해석하지 않습니다.
 
 ## 향후 방향
 
+전체 구역을 살피는 웹 관제와 차량 앱의 요청·동의·협력 주차를 연결하는 것은 향후 발전 방향입니다. 현재 웹과 앱은 서로 다른 가상 모델이며 하나의 실제 주차장을 제어하는 서비스로 통합하지 않았습니다.
+
+
 차주 부재 중 사전 위임과 차량별 응답을 토대로 협력 재배치·출차 보호·차량 부담을 검증합니다. 예약·시간표·주차관리/자율주행 연동은 개념 단계입니다. 시설·차량·앱이 도착·주차 작업·체류/희망 출차·회수/인계 일정을 교환하는 구상이며, 실제 공급자/API/시설 연동과 시간 정확도·효율 효과는 미검증입니다. 예약이나 예상 시각은 이동 권한·실제 완료·빈자리를 대신하지 않습니다.
+
+## 참고 화면과 UI 개선 후보
+
+가상 웹 관제 배치와 OSM 위치 검토는 부가 자료입니다. 아래 작은 배치 그림은 실제 시설·위성사진·실시간 점유가 아닙니다.
+
+<img src="media/screens/web-parking-dashboard.png" width="300" alt="향후 연계 참고용 가상 웹 관제 배치">
+
+큰 배치와 선택 차량 패널을 갖춘 앱 UI는 개발용 실행 후보이며, **제출 APK와 기본 Android 소스에는 반영하지 않았습니다.** [상태별 캡처·지도 출처](docs/screen-guide.md)와 [후보 변경분·검증 범위](docs/ui-candidate/README.md)에서 확인할 수 있습니다.
+
+## 안전한 로컬 시연
+
+서버는 기본 명령으로 PC의 `127.0.0.1`에만 실행합니다. 외부 터널·공유 서버에 노출하지 말고, 시연 중 불필요한 외부 웹페이지는 닫아 주세요. 사용 후 서버를 종료합니다. 참가 링크·로컬 DB·서명 키를 공개하지 않습니다. 알려진 로컬 요청 출처 검사 제한과 별도 수정 후보는 [보안 안내](SECURITY.md)를 참고하세요.
 
 ## 공개 범위와 권리
 
