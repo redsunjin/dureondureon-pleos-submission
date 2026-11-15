@@ -395,7 +395,7 @@
     },
     {
       "path": "media/screens/02-awaiting-app.png",
-      "sha256": "914b9663100ce060aba8ccd59ec94e3508bfeaaf3690ce482ebde36fa0693098"
+      "sha256": "e602f6bc40912a19acbbfa90924909d3f28ef3dd52654a1c66157a645e298d60"
     },
     {
       "path": "media/screens/02-awaiting.png",
@@ -415,7 +415,7 @@
     },
     {
       "path": "media/screens/06-completed-app.png",
-      "sha256": "788865f20f6d6e88af8826fce48076a62962c4c2557aacd87c0492d6fd42b250"
+      "sha256": "32e102f27a1284406f8fb95e38cf3d65eb6c90bb947cb3e58f72e44243deea47"
     },
     {
       "path": "media/screens/06-completed.png",
