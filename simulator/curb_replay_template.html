@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Swarm · 협력 평행주차 시뮬레이션</title>
+<style>
+:root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:#10171d;color:#eaf0f4}
+*{box-sizing:border-box}body{margin:0}main{max-width:1420px;margin:auto;padding:32px 32px 24px}header{display:flex;gap:24px;justify-content:space-between;align-items:flex-end;margin-bottom:24px}.eyebrow{font-size:12px;letter-spacing:2px;color:#6ed9bd;margin:0 0 12px}h1{font-size:29px;letter-spacing:-1px;margin:0 0 12px}p{line-height:1.6;margin:0;color:#b0bec8}.badge{font-size:12px;padding:8px 12px;background:#22313a;border:1px solid #37505c;border-radius:20px;white-space:nowrap}label{font-size:13px;color:#b0bec8}select,button{font:inherit;color:inherit;border:1px solid #415461;border-radius:8px;background:#24343f;padding:10px 14px}select{margin-top:7px;display:block;max-width:100%}button{cursor:pointer;min-height:42px}button:hover{background:#344c5b}button:disabled{opacity:.45;cursor:default}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #6ed9bd;outline-offset:3px}.primary{background:#79e4c4;color:#10271e;border-color:transparent;font-weight:650}.primary:hover{background:#a5f1da}.toolbar{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:20px 0}.tools{display:flex;gap:8px;flex-wrap:wrap}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.metric{padding:16px 18px;border:1px solid #2b3d48;border-radius:10px;background:#17222a}.metric span{display:block;font-size:12px;color:#9fb3bf;margin-bottom:8px}.metric strong{font-size:26px;font-weight:600}.metric small{font-size:13px;color:#9fb3bf;margin-left:5px}.panel{border:1px solid #344956;border-radius:14px;overflow:hidden;background:#17222b}.stagebar{padding:14px 20px;display:flex;justify-content:space-between;border-bottom:1px solid #344956;gap:16px}.stagebar strong{font-size:15px;color:#8be7ca}.stagebar span{font-size:13px;color:#b0bec8}.canvaswrap{width:100%;height:390px;background:#1d2c35}canvas{width:100%;height:100%;display:block}.legend{padding:12px 20px;display:flex;flex-wrap:wrap;gap:22px;font-size:12px;border-top:1px solid #344956;color:#bacbd5}.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px}.timeline{margin-top:20px;display:flex;align-items:center;gap:16px}input[type=range]{width:100%;accent-color:#79e4c4;cursor:pointer}.time{min-width:128px;font-variant-numeric:tabular-nums;text-align:right;font-size:13px;color:#c4d3dc}.details{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;margin-top:20px}.box{border-top:1px solid #344956;padding-top:16px}h2{font-size:15px;margin:0 0 10px}.box p{font-size:13px}.moves{display:flex;gap:8px;flex-wrap:wrap}.move{font-size:12px;padding:8px 10px;border-radius:6px;background:#243842;color:#b6e8db}.state-ok{color:#8be7ca}.state-no{color:#f5bc83}.foot{font-size:12px;color:#8ca0ae;margin-top:22px}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+@media(max-width:760px){main{padding:22px 14px}header{display:block}.badge{display:inline-block;margin-top:15px}h1{font-size:24px}.toolbar{align-items:start;flex-direction:column}.metrics{grid-template-columns:repeat(2,1fr)}.details{grid-template-columns:1fr}.canvaswrap{height:300px}.stagebar{flex-direction:column;gap:5px}}
+</style>
+</head>
+<body>
+<main>
+<header><div><div class="eyebrow">SWARM MOBILITY OS / 협력 평행주차</div><h1>앞뒤 차량이 움직여, 한 대의 공간을 만듭니다.</h1><p>간격 조정 → 공간 확보 → 접근 → 후진 진입 → 정렬 과정을 재생합니다.</p></div><span class="badge">가상 차량·공간 · 실제 차량 제어 없음</span></header>
+<div class="toolbar"><label>확인할 상황<select id="scenario" aria-label="시뮬레이션 상황">
+<option value="cooperative">앞뒤 차량 협력 · 공간 확보 후 주차</option><option value="independent">같은 공간 · 주변 차량 이동 없음</option><option value="consent_denied">주변 차량의 협조 거부</option><option value="insufficient_space">차량별 이동 여유 부족</option><option value="narrow_lane">회전할 통로가 좁은 경우</option><option value="stale_state">차량 위치가 오래된 경우</option><option value="communication_loss">이동 중 통신 끊김</option><option value="consent_withdrawn">이동 중 협조 철회</option><option value="new_obstacle">이동 중 새 장애물 등장</option></select></label><div class="tools"><button id="play" class="primary">재생</button><button id="reset">처음으로</button><button id="space">공간 확보 단계</button><button id="finish">결과 보기</button><label class="sr-only" for="speed">재생 속도</label><select id="speed" aria-label="재생 속도"><option value="1">1배속</option><option value="4" selected>4배속</option><option value="8">8배속</option></select></div></div>
+<div class="metrics"><div class="metric"><span>처음 차량 사이 빈틈</span><strong id="before">—</strong><small>m</small></div><div class="metric"><span>확보 목표 빈틈</span><strong id="after">—</strong><small>m</small></div><div class="metric"><span>결과: 주변 차량 이동 합계</span><strong id="travel">—</strong><small>m</small></div><div class="metric"><span>계산·실행 결과</span><strong id="outcome">—</strong></div></div>
+<section class="panel" aria-label="협력 평행주차 재생"><div class="stagebar"><strong id="phase" aria-live="polite">재생 대기</strong><span id="actor">주변 차량 4대 + 새 차량 1대</span></div><div class="canvaswrap"><canvas id="road" role="img" aria-label="차량 위치와 평행주차 경로"></canvas></div><div class="legend"><span><i style="background:#76d9b3"></i>주변 차량</span><span><i style="background:#62b8fc"></i>새 차량</span><span><i style="background:#ffb277"></i>확보할 빈틈</span><span>점선: 원래 위치·계획 경로</span></div></section>
+<div class="timeline"><input id="seek" type="range" min="0" max="1" value="0" aria-label="시뮬레이션 시간 이동"><span id="time" class="time">0.0 / 0.0초</span></div>
+<div class="details"><section class="box"><h2 id="result-title">계산 결과 · 공간 확보 단계의 이동 계획</h2><p id="explain"></p><div id="moves" class="moves" style="margin-top:12px"></div></section><section class="box"><h2>검사 기준</h2><p id="checks"></p><p style="margin-top:8px">이 화면은 Python 시뮬레이터의 계산 결과를 재생합니다. 차량 위치는 지도의 GPS가 아닌 가상 공간의 미터 단위 좌표입니다.</p></section></div>
+<p class="foot">저속 차량 운동과 직사각형 차체를 가정한 연구용 모델입니다. 두 번의 후진 회전 경로를 탐색하며, 찾지 못한 경우 다른 모든 주차 방법도 불가능하다는 뜻은 아닙니다. 실제 센서·브레이크·노면·주변 교통은 포함하지 않습니다.</p>
+</main>
+<script id="simulation-data" type="application/json">__SIMULATION_DATA__</script>
+<script>
+'use strict';
+const data=JSON.parse(document.getElementById('simulation-data').textContent);
+const $=id=>document.getElementById(id),canvas=$('road'),ctx=canvas.getContext('2d');
+let run,frames,index=0,playing=false,lastStamp=null,clock=0;
+const phaseNames={waiting:'재생 대기',create_space:'주변 차량 간격 조정',approach:'새 차량이 진입 위치로 접근',steering_at_rest:'정지 후 조향 방향 변경',reverse_in:'후진하며 공간 안으로 진입',reverse_align:'반대 방향으로 회전하며 정렬',final_position:'주차 위치를 중앙으로 조정',settle_spacing:'주차 후 차량 간격 다시 맞추기',parked:'평행주차 완료',stopped:'이동 중단',blocked:'이동 시작 안 함'};
+const reasons={completed:'앞뒤 차량과 바깥쪽 차량이 순서대로 이동해 공간을 넓혔고, 새 차량이 접근·후진 주차한 뒤 주변 차량 간격을 다시 맞췄습니다.',no_redistribution_capacity:'주변 차량이 이동할 수 있는 범위 안에서 필요한 빈틈을 확보하지 못했습니다. 차량은 움직이지 않습니다.',maneuver_not_found:'차량 길이만 맞추는 것으로는 부족합니다. 이 모델의 회전 경로에서 차체·도로 여유를 만족하는 경로를 찾지 못해 이동하지 않습니다.',search_budget_exhausted:'정해진 탐색 범위 안에서 검증된 경로를 찾지 못했습니다. 차량은 움직이지 않습니다.',stale_state:'차량 위치가 허용된 시간보다 오래돼 계획을 시작하지 않습니다.',communication_lost:'통신이 끊긴 시점에 모든 이동을 중단했습니다. 이미 이동한 차량은 현재 위치를 유지합니다.',consent_withdrawn:'차량의 협조가 철회돼 이동을 중단했습니다. 남은 계획은 실행하지 않습니다.',obstacle:'새 장애물이 나타나 이동을 중단했습니다. 장애물을 포함해 공간을 다시 확인해야 합니다.',initial_clearance_violation:'초기 차량 위치가 도로 경계 또는 차량 간 여유 조건을 만족하지 않아 시작하지 않습니다.'};
+function fmt(v){return Number.isFinite(v)?v.toFixed(2):'—'}
+function load(){
+ run=data[$('scenario').value];frames=run.result.frames;index=0;clock=0;playing=false;lastStamp=null;$('play').textContent='재생';$('seek').max=Math.max(0,frames.length-1);$('seek').value=0;
+ const cars=run.scene.parked, p=run.plan;
+ const gap=cars.length>2?cars[2].pose.x-cars[2].length/2-cars[1].pose.x-cars[1].length/2:null;
+ $('before').textContent=fmt(p?p.original_gap:gap);$('after').textContent=fmt(p?p.expanded_gap:null);
+ const moved=cars.reduce((a,c)=>a+(run.result.travel_by_vehicle[c.id]||0),0);$('travel').textContent=fmt(moved);
+ $('outcome').textContent={parked:'주차 완료',blocked:'시작 보류',stopped:'이동 중단'}[run.result.status];$('outcome').className=run.result.status==='parked'?'state-ok':'state-no';
+ $('explain').textContent=reasons[run.result.reason]||run.result.reason;
+ if(p&&run.result.status==='parked'){
+ const group=[...cars].sort((a,b)=>a.pose.x-b.pose.x),g=p.gap_index,poses=run.result.final_poses,n=poses.NEW;
+ const left=g?poses[group[g-1].id].x+group[g-1].length/2:run.scene.policy.wall_clearance+run.scene.policy.position_uncertainty;
+ const right=g<group.length?poses[group[g].id].x-group[g].length/2:run.scene.length-run.scene.policy.wall_clearance-run.scene.policy.position_uncertainty;
+ $('explain').textContent+=` 완료 간격: 뒤 ${fmt(n.x-run.scene.incoming.length/2-left)}m · 앞 ${fmt(right-n.x-run.scene.incoming.length/2)}m.`;
+ }
+ $('checks').textContent=`차량 간 최소 여유 ${fmt(run.scene.policy.clearance+2*run.scene.policy.position_uncertainty)}m · 도로 경계 여유 ${fmt(run.scene.policy.wall_clearance+run.scene.policy.position_uncertainty)}m · 위치 오차 가정 차량당 ±${fmt(run.scene.policy.position_uncertainty)}m.`;
+ if(Number.isFinite(run.result.certified_body_clearance))$('checks').textContent+=` 이동 구간 여유 하한 ${fmt(run.result.certified_body_clearance)}m.`;
+ $('moves').replaceChildren();if(p){const targets=Object.fromEntries(p.shifted);cars.forEach(c=>{const dx=targets[c.id]-c.pose.x;const el=document.createElement('span');el.className='move';el.textContent=`${c.id} ${dx<0?'←':'→'} ${fmt(Math.abs(dx))}m`;$('moves').append(el)})}
+ $('play').disabled=frames.length<2;$('space').disabled=!p;update();
+}
+function update(){
+ const f=frames[index],end=frames.at(-1).time;$('seek').value=index;
+ $('phase').textContent=phaseNames[f.stage]||f.stage;
+ $('actor').textContent=f.actor?`${f.actor==='NEW'?'새 차량':f.actor} 이동 중`:'주변 차량 4대 + 새 차량 1대';
+ $('time').textContent=`${f.time.toFixed(1)} / ${end.toFixed(1)}초`;
+ canvas.setAttribute('aria-label',`${phaseNames[f.stage]||f.stage}, ${f.time.toFixed(1)}초, ${run.scene.name}`);draw();
+}
+function draw(){
+ const box=canvas.getBoundingClientRect(),dpr=devicePixelRatio||1;
+ if(canvas.width!==Math.round(box.width*dpr)||canvas.height!==Math.round(box.height*dpr)){canvas.width=Math.round(box.width*dpr);canvas.height=Math.round(box.height*dpr)}
+ ctx.setTransform(dpr,0,0,dpr,0,0);const W=box.width,H=box.height;ctx.clearRect(0,0,W,H);
+ const scene=run.scene,f=frames[index],pad=30,scale=Math.min((W-2*pad)/scene.length,(H-70)/scene.road_width),ox=(W-scene.length*scale)/2,oy=(H+scene.road_width*scale)/2-5;
+ const x=v=>ox+v*scale,y=v=>oy-v*scale;
+ ctx.fillStyle='#26353f';ctx.fillRect(x(0),y(scene.road_width),scene.length*scale,scene.road_width*scale);
+ ctx.fillStyle='#1e393c';ctx.fillRect(x(0),y(2.8),scene.length*scale,2.8*scale);
+ ctx.strokeStyle='#88a3af';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x(0),y(0));ctx.lineTo(x(scene.length),y(0));ctx.stroke();
+ ctx.strokeStyle='#5f7781';ctx.setLineDash([7,8]);ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x(0),y(2.8));ctx.lineTo(x(scene.length),y(2.8));ctx.stroke();ctx.setLineDash([]);
+ ctx.fillStyle='#b8cbd2';ctx.font='12px sans-serif';ctx.textAlign='left';ctx.fillText('도로 · 진행 방향 →',x(0)+8,y(scene.road_width)+20);ctx.fillText('연석',x(0)+8,y(0)+22);
+ for(let m=5;m<scene.length;m+=5){ctx.fillStyle='#7e9ba7';ctx.textAlign='center';ctx.fillText(`${m}m`,x(m),y(0)+22)}
+ const cars=[...scene.parked,scene.incoming];
+ if(run.plan){
+ const group=[...scene.parked].sort((a,b)=>a.pose.x-b.pose.x),gap=run.plan.gap_index;
+ const left=gap?f.poses[group[gap-1].id].x+group[gap-1].length/2:scene.policy.wall_clearance+scene.policy.position_uncertainty;
+ const right=gap<group.length?f.poses[group[gap].id].x-group[gap].length/2:scene.length-scene.policy.wall_clearance-scene.policy.position_uncertainty;
+ ctx.fillStyle='#ffb27725';ctx.fillRect(x(left),y(2.8),(right-left)*scale,2.8*scale);
+ ctx.fillStyle='#ffbd86';ctx.textAlign='center';ctx.font='bold 13px sans-serif';const np=f.poses.NEW;const aligned=Math.abs(np.y-scene.parking_y)<0.01&&Math.abs(np.yaw)<0.01;const label=aligned?`뒤 ${(np.x-scene.incoming.length/2-left).toFixed(2)}m · 앞 ${(right-np.x-scene.incoming.length/2).toFixed(2)}m`:`현재 빈틈 ${(right-left).toFixed(2)}m`;ctx.fillText(label,x((left+right)/2),y(0.12));
+ ctx.strokeStyle='#62b8fc66';ctx.setLineDash([4,5]);ctx.lineWidth=2;ctx.beginPath();frames.filter(fr=>fr.actor==='NEW').forEach((fr,i)=>{const p=fr.poses.NEW;i?ctx.lineTo(x(p.x),y(p.y)):ctx.moveTo(x(p.x),y(p.y))});ctx.stroke();ctx.setLineDash([]);
+ const p=run.plan.target;ctx.strokeStyle='#ffb27788';ctx.setLineDash([4,5]);ctx.strokeRect(x(p.x-scene.incoming.length/2),y(p.y+scene.incoming.width/2),scene.incoming.length*scale,scene.incoming.width*scale);ctx.setLineDash([]);
+ }
+ cars.forEach(car=>{const p=car.pose;ctx.strokeStyle='#9bb1bf44';ctx.setLineDash([4,4]);ctx.strokeRect(x(p.x-car.length/2),y(p.y+car.width/2),car.length*scale,car.width*scale);ctx.setLineDash([])});
+ for(const obstacle of f.obstacles||scene.obstacles){ctx.save();ctx.translate(x(obstacle.pose.x),y(obstacle.pose.y));ctx.rotate(-obstacle.pose.yaw);ctx.fillStyle='#fa897c';ctx.fillRect(-obstacle.length*scale/2,-obstacle.width*scale/2,obstacle.length*scale,obstacle.width*scale);ctx.restore();ctx.fillStyle='#ffb3ab';ctx.textAlign='center';ctx.fillText('새 장애물',x(obstacle.pose.x),y(obstacle.pose.y+obstacle.width/2)-8)}
+ cars.forEach(car=>{const p=f.poses[car.id],isNew=car.id==='NEW';ctx.save();ctx.translate(x(p.x),y(p.y));ctx.rotate(-p.yaw);
+ const L=car.length*scale,B=car.width*scale;ctx.fillStyle=isNew?'#62b8fc':car.consent?'#76d9b3':'#82949d';ctx.beginPath();ctx.roundRect(-L/2,-B/2,L,B,6);ctx.fill();ctx.fillStyle='#18313f';ctx.fillRect(-L*.18,-B*.35,L*.38,B*.7);ctx.fillStyle='#f3f4d9';ctx.fillRect(L*.41,-B*.35,3,B*.18);ctx.fillRect(L*.41,B*.17,3,B*.18);ctx.fillStyle='#112d34';ctx.font='bold 12px sans-serif';ctx.textAlign='center';ctx.fillText(isNew?'새 차량':car.id,-L*.33,4);ctx.restore();
+ if(!isNew){const dx=p.x-car.pose.x;ctx.font='11px sans-serif';ctx.textAlign='center';ctx.fillStyle='#bce8d8';ctx.fillText(`${dx<0?'←':'→'}${Math.abs(dx).toFixed(2)}m`,x(p.x),y(p.y+car.width/2)-10)}
+ });
+}
+$('scenario').addEventListener('change',load);$('speed').addEventListener('change',()=>{lastStamp=null});
+$('play').onclick=()=>{if(index===frames.length-1){index=0;clock=0}playing=!playing;lastStamp=null;$('play').textContent=playing?'일시정지':'재생';update()};
+$('reset').onclick=()=>{playing=false;index=0;clock=0;$('play').textContent='재생';update()};
+$('finish').onclick=()=>{playing=false;index=frames.length-1;clock=frames[index].time;$('play').textContent='재생';update()};
+$('space').onclick=()=>{playing=false;const i=frames.findIndex(f=>f.stage==='approach');index=i<0?frames.length-1:i;clock=frames[index].time;$('play').textContent='재생';update()};
+$('seek').oninput=()=>{playing=false;index=Number($('seek').value);clock=frames[index].time;$('play').textContent='재생';update()};
+function tick(stamp){if(playing){if(lastStamp!==null)clock+=(stamp-lastStamp)/1000*Number($('speed').value);while(index+1<frames.length&&frames[index+1].time<=clock)index++;if(index===frames.length-1){playing=false;$('play').textContent='재생'}update()}lastStamp=stamp;requestAnimationFrame(tick)}
+new ResizeObserver(draw).observe(canvas);load();requestAnimationFrame(tick);
+</script>
+</body></html>

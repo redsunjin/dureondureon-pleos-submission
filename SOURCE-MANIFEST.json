@@ -1,0 +1,475 @@
+{
+  "date": "2026-11-15 KST",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "66600c93246606e63afea1afbef2789f079d7264afbad8fed1a890203d2b36b5"
+    },
+    {
+      "path": "README.md",
+      "sha256": "63f6d5695c2c5ec1d80a71af9bbb9f69a273086b445241e9740a5059fbeb6378"
+    },
+    {
+      "path": "VALIDATION.md",
+      "sha256": "39155efd6a89905350f9d1cf5656fad79c145d671682b548f7d92247f10a0bee"
+    },
+    {
+      "path": "android/app/build.gradle.kts",
+      "sha256": "129a72d4b0b182d5414632690e61b1e8588c200770dace9dd5cc272001402a38"
+    },
+    {
+      "path": "android/app/src/debug/AndroidManifest.xml",
+      "sha256": "3fd782b268f618ef0c725797e88fb9ebccd30fd33685f4f263f535cdad53b520"
+    },
+    {
+      "path": "android/app/src/debug/res/xml/debug_network_security.xml",
+      "sha256": "9fa73b0651987288a63a5997d388394638c02487e941b3829f3897b99841998f"
+    },
+    {
+      "path": "android/app/src/local/java/io/swarm/mobility/MobilitySourceFactory.kt",
+      "sha256": "001fb25d472a48991dc28ab68b174a2d7cfb76d71e944d5f522252fdc5df1073"
+    },
+    {
+      "path": "android/app/src/local/java/io/swarm/mobility/VehicleSourceFactory.kt",
+      "sha256": "217e7eade39f13635ce62805a3bbf4142252239848184888efb9ad7a12eceb98"
+    },
+    {
+      "path": "android/app/src/main/AndroidManifest.xml",
+      "sha256": "33571c05a0823d0c9835ac0b296b4efc074d3d251c487758ec71286a3cb7210d"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/AppMapDialog.kt",
+      "sha256": "84641891ebe3a2480d9f63b5f0e399481619fd7eed75bd3e2d5320eb80eeb4a6"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/AppMapGeometry.kt",
+      "sha256": "b86fcb162529dfac249bf301dc6ee466cbef31740b79bdbdaff47e713ebba57f"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/CoordinationClient.kt",
+      "sha256": "38b14c1bedf092004dab4dfa3bbd45b8a8b4e8defac87d1863d9e33f48cada16"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/CoordinationSession.kt",
+      "sha256": "7ed290cbe208fe2ff46695250f4ec0ad650165f68959b29643f20b5755093ecd"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/CurbActivity.kt",
+      "sha256": "5c6c8efc37373885c59d2c8df4f0fb4485df14db0db8d4b1152e935a7fef3e83"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/CurbClient.kt",
+      "sha256": "5c1b15ba6b9c68e851443c96b24ddb2af1453f8ab153e2efea148fd1b55b86e8"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/CurbRoadView.kt",
+      "sha256": "e6971ced5f8838411607e437fd25fff0f562a1dfc33e88295ea3701b072dd9df"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/CurbState.kt",
+      "sha256": "1886351947aaa2430b3fa308af8aa561fe3444d3c2cc1233491fefa42ee924a2"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/GpsMapView.kt",
+      "sha256": "d2bb2d95a9c224fa839388ba690a090ce0d75f7941d094fb6d71492eaba0a876"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/MainActivity.kt",
+      "sha256": "063362784687ffa50a5f65ac532ec76293fe51b68cd0512e3ac4c75149113893"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/MobilitySource.kt",
+      "sha256": "f325f00aa1dd207e6755056379eb93fc2481bc8fbeb5984a14f57170651acde8"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/MockCoordinationRepository.kt",
+      "sha256": "a3208a094c3ecd8d5e31307d1b006217dc1a2277e88f8d92dc53d7340eef583f"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/MockVehicleAdapter.kt",
+      "sha256": "28ecb71672139c025a8b317bd5e346a69d5b415bc7f6feec11138451f23437bf"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/NavigationPosition.kt",
+      "sha256": "3084e7992acdf72ee839f09c629c19db90067b69c11557af0f83466c1eb71346"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/ParkingRouteTarget.kt",
+      "sha256": "935bcda8522956bdb7269c5686bd34b505320869fd11991915db26f397aa7b4b"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/ParticipationActivity.kt",
+      "sha256": "2583a95917dd4be81b679b637287512d56a7cbf304306ef7b0763b689c7c4d29"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/ParticipationClient.kt",
+      "sha256": "73114e08d1fa976bbeaa02840f04ff3aa1614a5e1352a1d360a65c2febf4dc82"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/ParticipationPolicy.kt",
+      "sha256": "d12e89cb377b79b17f28e8aa40520aa23297d22d583cf38ff43e4317462e9113"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/PublicMapClient.kt",
+      "sha256": "d436c81240ac2dc72898aa7e09a3c6dc4f4269de986fa75348f0333ef4192345"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/ReservationClock.kt",
+      "sha256": "c896c13c603f8d12a510078b4fc6f77fb438c3ddfd63785419ee04d68438e433"
+    },
+    {
+      "path": "android/app/src/main/java/io/swarm/mobility/VehicleStateSource.kt",
+      "sha256": "1e807b1cad68bf0a5d7b1f5b9593c545a8e6508de89bf92c1e15b88ac69e3faa"
+    },
+    {
+      "path": "android/app/src/main/res/values/colors.xml",
+      "sha256": "bba8aa53bf54ccb1054364308fcfd44da5e05824cd6ea9f6690b3f8a0499322d"
+    },
+    {
+      "path": "android/app/src/main/res/values/ids.xml",
+      "sha256": "8a8cbaf6e824c97f547745e0f80456948cc5666b5f481b8fcca24a47970ff002"
+    },
+    {
+      "path": "android/app/src/main/res/values/strings.xml",
+      "sha256": "da325bbe53ecd1ce86cc9891140d33c79c876cae1e4993b61d612e496fd80bda"
+    },
+    {
+      "path": "android/app/src/main/res/values/themes.xml",
+      "sha256": "8d468fa3a176f894c6a0b346b81bfa0b781e2650cb8e641cb9cbcfd60211fe08"
+    },
+    {
+      "path": "android/app/src/pleos/java/io/swarm/mobility/MobilitySourceFactory.kt",
+      "sha256": "b5522bcd30d35d23bd4daca34e35a53ab243b69393a54513a44be8a6318e72e2"
+    },
+    {
+      "path": "android/app/src/pleos/java/io/swarm/mobility/PleosMobilityAdapter.kt",
+      "sha256": "d036a53ac2a7c7a2f66e6079702486b186a5d7f566a21ea1865962bd818b60f4"
+    },
+    {
+      "path": "android/app/src/pleos/java/io/swarm/mobility/PleosVehicleAdapter.kt",
+      "sha256": "b6cff89392742e7a106d66977e1032d2ef1bd726771b566806a76ef17174162b"
+    },
+    {
+      "path": "android/app/src/pleos/java/io/swarm/mobility/VehicleSourceFactory.kt",
+      "sha256": "730e9ad1d582959509120c547b1c971b7b1b43176d700fc6d8bfafb15ac25577"
+    },
+    {
+      "path": "android/app/src/submissionDemo/AndroidManifest.xml",
+      "sha256": "82f754fe1142d23c681121b35e167113af459beb9141dc47aeb8d3ae92a8f573"
+    },
+    {
+      "path": "android/app/src/submissionDemo/res/xml/submission_network_security.xml",
+      "sha256": "9fa73b0651987288a63a5997d388394638c02487e941b3829f3897b99841998f"
+    },
+    {
+      "path": "android/app/src/test/java/io/swarm/mobility/AppMapGeometryTest.kt",
+      "sha256": "62b0554eb9cdd09cb13e7e0e87e5bcefbb3b6dc78765946eba3def132ac2c2c9"
+    },
+    {
+      "path": "android/app/src/test/java/io/swarm/mobility/CurbUiPolicyTest.kt",
+      "sha256": "257618c11bf343b09431c5adfb2755f4a9f14fea1e14c5ce490f716f8afbfa1d"
+    },
+    {
+      "path": "android/app/src/test/java/io/swarm/mobility/MobilityValidationTest.kt",
+      "sha256": "b02a05bfeb5adeca6e18320b96fccd0452ea1f457c6509b63caf64f605058528"
+    },
+    {
+      "path": "android/app/src/test/java/io/swarm/mobility/NavigationPositionTest.kt",
+      "sha256": "bd46039dec7e04c734e11f8219fe9b67daa8cd5317de9de8fc15670ac5ea314b"
+    },
+    {
+      "path": "android/app/src/test/java/io/swarm/mobility/ParkingRouteTargetTest.kt",
+      "sha256": "461da483a3bf0f0de1ae159b2d765c74a901da74371e97198efd6176c10f194c"
+    },
+    {
+      "path": "android/app/src/test/java/io/swarm/mobility/ParticipationPolicyTest.kt",
+      "sha256": "c1f151169c194c32884380dcb5c8d83e70e7f82f58774981ad5183e7f58d2d99"
+    },
+    {
+      "path": "android/app/src/test/java/io/swarm/mobility/ReservationClockTest.kt",
+      "sha256": "58e4d53eb82a41ba4fe58503b02fb589f79e80100933a33bbcd15568cf37bb3c"
+    },
+    {
+      "path": "android/build.gradle.kts",
+      "sha256": "227ff9351977058c6dadd3cbc3e065942f8f588a96fedaf341631dcf7ee31767"
+    },
+    {
+      "path": "android/gradle.properties",
+      "sha256": "fa078c27c9e4bde28a029d673875b028884505efa436b68cf60e1ac0be5b679b"
+    },
+    {
+      "path": "android/settings.gradle.kts",
+      "sha256": "8e6d1373cc6359dbc0cc26b832a84f559d95ef9c58f163d4d747aacf2bf4c003"
+    },
+    {
+      "path": "apk/README.md",
+      "sha256": "0608881d2c4b7daee7d712fc2a857ee81fb17d1efd36ecfc4224f58efdb55ff2"
+    },
+    {
+      "path": "apk/SHA256SUMS",
+      "sha256": "852ffc7ee08e65b9174b0a2ce0e117c29b8e93251f6097e1354207739470ed76"
+    },
+    {
+      "path": "apk/redsunjin_두런두런_release.apk",
+      "sha256": "560e6b30a2116dd318223e6948dfacd6467ddccb41bb7b471943407a6d9c959e"
+    },
+    {
+      "path": "coordination/__init__.py",
+      "sha256": "6d4236a0f01a59a5b171709149b95f3a4cf52c3207422a9c6ad75c68de19ef87"
+    },
+    {
+      "path": "coordination/admin/app.js",
+      "sha256": "a86783ed22c7e082f0eec677372b4dccb4301480ad7db58e68fba3671d930a23"
+    },
+    {
+      "path": "coordination/admin/demo-map.png",
+      "sha256": "2f5e851f9a18ad20482b5cb64cce513a547e7c3f9af478a7c985b56e931a0504"
+    },
+    {
+      "path": "coordination/admin/execution-lab.css",
+      "sha256": "62f2e15303f721d489e7676b1c010f05d39aeaa73db77783546b7b8e40fbb7a6"
+    },
+    {
+      "path": "coordination/admin/execution-lab.html",
+      "sha256": "645fbd0309c4763eaaa9530322b2fe2ce22af368e87682903fb83f40eab58d8a"
+    },
+    {
+      "path": "coordination/admin/execution-lab.js",
+      "sha256": "206a3d2f8bb0faddc4a2b6a8224cc6c0f4640b1c50ae53596f2e4aecfa50cad8"
+    },
+    {
+      "path": "coordination/admin/index.html",
+      "sha256": "fe8ed520af4b74069c427167f6dfdf11ddae4837a788679f1aa0aab7dc8da384"
+    },
+    {
+      "path": "coordination/admin/kakao-map.js",
+      "sha256": "2f08f54a5693e7d8269a9b27fceb2e47f022a1fd18dcfd23b34d08aed7de87b3"
+    },
+    {
+      "path": "coordination/admin/osm-map.js",
+      "sha256": "9f80a8421766ab7c132c1a463a2c5588d59591adcf6b8ce030ac94549f3a0527"
+    },
+    {
+      "path": "coordination/admin/participate.html",
+      "sha256": "1fd8668e63657c22f1decbb2eeb5d7c7af2fddb797906f0fe798dde0ab823278"
+    },
+    {
+      "path": "coordination/admin/participate.js",
+      "sha256": "dad4b1ab5e6561de7c4865dfbd7a5a74503541a76fa41d5af07d7194f38414d0"
+    },
+    {
+      "path": "coordination/admin/site-map.js",
+      "sha256": "38cad09abd2192c34f9c9270579280521a8084143ad4e27b277dd0fb3fcdfb99"
+    },
+    {
+      "path": "coordination/admin/site-reviews.js",
+      "sha256": "5b59e1601449ea00f237092fcd06052b68764c6e3cb4b742507975589c8abdae"
+    },
+    {
+      "path": "coordination/admin/style.css",
+      "sha256": "a4147aecbf82aaa41e3266c2a52dad639b09ee3243b3430bf6a533a4d822df58"
+    },
+    {
+      "path": "coordination/admin/vendor/leaflet/LICENSE",
+      "sha256": "53e8dc25862014e4324741ca18fbe3611e11d42ef69f59f86ea8c5389647d4cb"
+    },
+    {
+      "path": "coordination/admin/vendor/leaflet/leaflet.css",
+      "sha256": "a7837102824184820dfa198d1ebcd109ff6d0ff9a2672a074b9a1b4d147d04c6"
+    },
+    {
+      "path": "coordination/admin/vendor/leaflet/leaflet.js",
+      "sha256": "db49d009c841f5ca34a888c96511ae936fd9f5533e90d8b2c4d57596f4e5641a"
+    },
+    {
+      "path": "coordination/curb_sessions.py",
+      "sha256": "8629b4214a8dff64970f043d2995661730cf0f36f7496d7383851c3cce108ab6"
+    },
+    {
+      "path": "coordination/data/sejong-arboretum.geojson",
+      "sha256": "8e2e08f27491ffe499289f263fb4979877d469efbe0d9ee37c7f456f553e8395"
+    },
+    {
+      "path": "coordination/errors.py",
+      "sha256": "8873fd16a6272d277dc5c0895a7c33d920476ab39a0dfc448b5a3b65b9ae8a42"
+    },
+    {
+      "path": "coordination/execution.py",
+      "sha256": "43ece48ebd915253c9fa0efc6190ca18149b8e20dd22cec9e1a3abb5bcf5d5a2"
+    },
+    {
+      "path": "coordination/execution_demo.py",
+      "sha256": "eb5bc3f7af4460ed2cbb8a472fe471218442d5da6666356e93f649199962b200"
+    },
+    {
+      "path": "coordination/server.py",
+      "sha256": "eadeec898f1d2e5481ef07f130f4aaf065fad80c0e4ae6c749018e0d2778679a"
+    },
+    {
+      "path": "coordination/site_map.py",
+      "sha256": "4d368b792ae3388e723757291ea46b4d52b47e1a841722d4cc6b48cc62488d76"
+    },
+    {
+      "path": "coordination/site_reviews.py",
+      "sha256": "bd1e0323c08d9b74c23cb9fed08eda667480f52360e5a4266ea3009f1cf67733"
+    },
+    {
+      "path": "coordination/site_survey.py",
+      "sha256": "c282058c611e46d163afeb537544c8e2c07fef02d975fbaa610dd5178a0e571d"
+    },
+    {
+      "path": "coordination/test_curb_observations.py",
+      "sha256": "e8648187adf5e33271acc1932e261022289103f6a1008d65d1855a641f06854e"
+    },
+    {
+      "path": "coordination/test_curb_replan.py",
+      "sha256": "57cfa805fd45727ac8f4614887d329668596432f1d6af3d865432104c28b8068"
+    },
+    {
+      "path": "coordination/test_curb_sessions.py",
+      "sha256": "065625efe5ce2fd59ade32f0c9391bb39ee4cb5e681b5267053f13460fb1b736"
+    },
+    {
+      "path": "coordination/test_curb_traffic.py",
+      "sha256": "e9e3c6219e54a408f8d68b9659ff09af9d8503f37e28d2ecbcd9d802cbac21a0"
+    },
+    {
+      "path": "coordination/test_execution.py",
+      "sha256": "91d4a0de7a36d2080e650c0c7cd8a737f7657e3428a918c899321f92244d0f53"
+    },
+    {
+      "path": "coordination/test_execution_demo.py",
+      "sha256": "3d5ff4cf569e4176866d000d75e0218a3b9ede430808b0ab828d02db8c89d42a"
+    },
+    {
+      "path": "coordination/test_execution_traffic.py",
+      "sha256": "53600893f6a1f86a61f7e6c30aec7188349728c52b4676171263a175de6663f8"
+    },
+    {
+      "path": "coordination/test_participation.py",
+      "sha256": "b3a2a80b6adf8b1517e6a9e1efeb4c1ca3e1d3e46cd6a3be9fdf233ac8b8744c"
+    },
+    {
+      "path": "coordination/test_server.py",
+      "sha256": "82674c6c24a9f8422d78a7ca794354edd0a1314cc488d4bcac6e691826dd20a5"
+    },
+    {
+      "path": "coordination/test_site_map.py",
+      "sha256": "11218fce78c405ac8beb8f1e6d694463ce2f56c7bd4ac15955c63655a884ae9a"
+    },
+    {
+      "path": "coordination/test_site_reviews.py",
+      "sha256": "c09c2141475e458afde2c1374d154b57c28857e5c605f625ada3f4e5237fcb93"
+    },
+    {
+      "path": "coordination/test_site_survey.py",
+      "sha256": "1984bf2470d8bd7b4e1f07f91ba96ffda4efc79581ef03fe29ac95296855108a"
+    },
+    {
+      "path": "coordination/test_vacancy.py",
+      "sha256": "02a410307c8056a2391702361ce78a6b6707ea480ac4051a39f138c2daaf4397"
+    },
+    {
+      "path": "coordination/vacancy.py",
+      "sha256": "2488b7d3132963aac62e40205e50156bbdb04912b54dbb3a482afa04ac7c3749"
+    },
+    {
+      "path": "media/dureondureon-demo-draft.mp4",
+      "sha256": "56bd2433031ff257b09501214d660ad8ee99e962cdf86ee7d61a57f819e655e5"
+    },
+    {
+      "path": "media/signed-release-completed.png",
+      "sha256": "677a05c2ab16cdfecc7f1a48320481d9acd2ce3979421404d02c78cc0e616d43"
+    },
+    {
+      "path": "scripts/qa-vacancy-final.js",
+      "sha256": "7c11a3425f2ac413316b466bd28cd5055a7f0089ceb5bfaf4c47afbf5a409008"
+    },
+    {
+      "path": "scripts/qa-vacancy-resilience.js",
+      "sha256": "ba8c22baaf2703f837b591ff381257da94d625f0e0acdfc8b3d4d334c1407649"
+    },
+    {
+      "path": "scripts/qa-vacancy.js",
+      "sha256": "c5990f9fdd7e90cbc756e909debb8ffcd5c419aa400f0a8903c7d6cc318cce28"
+    },
+    {
+      "path": "scripts/test-execution-lab.cjs",
+      "sha256": "99c4f357c1571ce41bfbb0e532258de11269bc75e1171810914e4ab729fefb70"
+    },
+    {
+      "path": "scripts/test-osm-map.cjs",
+      "sha256": "9ad5e906eaa21114ed16ea09db9b2bcd0942cfadf146eb82ba417f401f367c76"
+    },
+    {
+      "path": "simulator/curb_dynamic.py",
+      "sha256": "2c40872b91a590a98d1041f8553421fe8afc06fbe988fa1a1b29fe2d73476658"
+    },
+    {
+      "path": "simulator/curb_parking.py",
+      "sha256": "e3d2c5419529f47eaaf43861766f6624b0ebb436d4a93b35d19ac854f9e25125"
+    },
+    {
+      "path": "simulator/curb_replan.py",
+      "sha256": "6da6c21030a9c9edb8953e32fd96e9ccf56edb05471806451fddf8144870a4b6"
+    },
+    {
+      "path": "simulator/curb_replay.py",
+      "sha256": "9dc82385d6646b8f225677dac39a7bfae63a87a3384e67fdbe23eeea58ab4128"
+    },
+    {
+      "path": "simulator/curb_replay_template.html",
+      "sha256": "51d500bb65e9eb2bc1b16e5f605e6202e975287deb79e5c7789bb3fceef20ac3"
+    },
+    {
+      "path": "simulator/curb_traffic.py",
+      "sha256": "cbbeff7449b6dd2c8da69cf300e3de52809d3e66107ca9f64ba8e1d37b742d3d"
+    },
+    {
+      "path": "simulator/delegated_execution.py",
+      "sha256": "e0122aa1bd101a510183c3ebbebe414f8e4e94f47968929183fd7ab83b2cde58"
+    },
+    {
+      "path": "simulator/execution_traffic.py",
+      "sha256": "ab2fa3307fa904971cb10aaf619134262068a65b7c4c76a6c1bdc189a6d6bf5f"
+    },
+    {
+      "path": "simulator/execution_trajectory.py",
+      "sha256": "c1dacb4a672e9ae7259dce8097580bdb3517e85d462a5e9055aa7a350616e5b2"
+    },
+    {
+      "path": "simulator/participation_validation.py",
+      "sha256": "640dee29a05cde9b8bfdf3ea4c00127977f08a9f10d4763bb8c2b4a75ddd0506"
+    },
+    {
+      "path": "simulator/swarm_simulator.py",
+      "sha256": "a9b74c6d281c875cecf0a29f110752877dba52ea41096b24c7558ceff986f4b3"
+    },
+    {
+      "path": "simulator/test_curb_dynamic.py",
+      "sha256": "7e1ec593afedaae107afcd74e840ab1f34a460b980503181d72c3773e7f86798"
+    },
+    {
+      "path": "simulator/test_curb_parking.py",
+      "sha256": "8b8f4f16195ac6f8b4f9f617c7094200939b7c6b7b8f8d5497fedd4c0af9bc68"
+    },
+    {
+      "path": "simulator/test_curb_replan.py",
+      "sha256": "5db4bf34e0f3d0247ab4c426adaae0dd60908bc8822d2b49bf7ca780eb810de4"
+    },
+    {
+      "path": "simulator/test_curb_traffic.py",
+      "sha256": "ab60bf9d9c59f6b6e4c47efb02d8e85dda7daf1533199c9254304cdfe89464aa"
+    },
+    {
+      "path": "simulator/test_swarm_simulator.py",
+      "sha256": "2260d219d250a334c0c43445ce9ca6af582a4907a5c2e251b7090d0e8f6d9754"
+    }
+  ],
+  "apk": "apk/redsunjin_두런두런_release.apk",
+  "signed": true,
+  "installationVerified": true,
+  "runtimeVerifiedToday": true,
+  "runtimeScope": "Pleos emulator install, startup, 4/5 blocked, 5/5 approval and full parking completion; no physical vehicle",
+  "apkSha256": "560e6b30a2116dd318223e6948dfacd6467ddccb41bb7b471943407a6d9c959e"
+}

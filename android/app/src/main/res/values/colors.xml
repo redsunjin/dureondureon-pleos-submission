@@ -1,0 +1,8 @@
+<resources>
+    <color name="swarm_background">#101820</color>
+    <color name="swarm_surface">#1B2835</color>
+    <color name="swarm_primary">#63D6B2</color>
+    <color name="swarm_warning">#FFD166</color>
+    <color name="swarm_text">#F5F7FA</color>
+    <color name="swarm_muted">#AAB7C4</color>
+</resources>

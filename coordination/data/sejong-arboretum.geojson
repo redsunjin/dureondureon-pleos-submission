@@ -1,0 +1,829 @@
+{
+  "type": "FeatureCollection",
+  "coordinateSystem": "EPSG:4326",
+  "siteId": "sejong-arboretum-review",
+  "label": "국립세종수목원 · 주차장 후보 검토",
+  "address": "세종특별자치시 수목원로 136",
+  "mapVersion": 2,
+  "usageRights": "licensed",
+  "license": "ODbL-1.0 · © OpenStreetMap contributors",
+  "source": "OpenStreetMap 공개 지리 자료 · 현장 미확인",
+  "sourceUrl": "https://www.openstreetmap.org/way/1113205038",
+  "updatedAt": "2026-10-31T09:53:06+09:00",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "parking-osm-1113205038",
+      "properties": {
+        "kind": "zone",
+        "label": "서북측 주차장 후보 · 명칭 미등록",
+        "source": "OpenStreetMap 주차장 경계 · 현장 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113205038",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "sourceUpdatedAt": "2022-11-15T04:23:42Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              127.2817541,
+              36.4976847
+            ],
+            [
+              127.2816449,
+              36.4977851
+            ],
+            [
+              127.2815708,
+              36.4978843
+            ],
+            [
+              127.2815224,
+              36.4980237
+            ],
+            [
+              127.2815006,
+              36.4981359
+            ],
+            [
+              127.2814914,
+              36.4982821
+            ],
+            [
+              127.281509,
+              36.4983988
+            ],
+            [
+              127.2824019,
+              36.4990785
+            ],
+            [
+              127.2825187,
+              36.4989734
+            ],
+            [
+              127.2830347,
+              36.4993732
+            ],
+            [
+              127.2843548,
+              36.498656
+            ],
+            [
+              127.2843735,
+              36.4985077
+            ],
+            [
+              127.2838336,
+              36.4980529
+            ],
+            [
+              127.2836765,
+              36.4979563
+            ],
+            [
+              127.2838398,
+              36.4977086
+            ],
+            [
+              127.283356,
+              36.4975229
+            ],
+            [
+              127.2829651,
+              36.4974407
+            ],
+            [
+              127.2825387,
+              36.4974154
+            ],
+            [
+              127.2821465,
+              36.4974517
+            ],
+            [
+              127.2819935,
+              36.4974897
+            ],
+            [
+              127.2819055,
+              36.4975647
+            ],
+            [
+              127.2817541,
+              36.4976847
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "facility-reference",
+      "properties": {
+        "kind": "reference",
+        "label": "수목원 위치 참고점 · 차량 입구 아님",
+        "source": "OSM 수목원 대표 위치 · 주차장 입구 아님",
+        "sourceUrl": "https://www.openstreetmap.org/way/799013764",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "sourceUpdatedAt": "2026-10-10T03:12:43Z"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.2847166,
+          36.4948084
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-896070606",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 01 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/896070606",
+        "sourceUpdatedAt": "2022-11-15T04:06:16Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "unknown"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.2823845,
+            36.4991257
+          ],
+          [
+            127.282515,
+            36.499044
+          ],
+          [
+            127.2825823,
+            36.4989877
+          ],
+          [
+            127.2826667,
+            36.4989171
+          ],
+          [
+            127.2828213,
+            36.4987878
+          ],
+          [
+            127.2829647,
+            36.4986679
+          ],
+          [
+            127.2831372,
+            36.4985236
+          ],
+          [
+            127.2832727,
+            36.4984104
+          ],
+          [
+            127.2834137,
+            36.4982925
+          ],
+          [
+            127.2835635,
+            36.4981672
+          ],
+          [
+            127.2836605,
+            36.4980861
+          ],
+          [
+            127.2836983,
+            36.4980545
+          ],
+          [
+            127.283824,
+            36.4979494
+          ],
+          [
+            127.2838749,
+            36.4979068
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-1113205039",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 02 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113205039",
+        "sourceUpdatedAt": "2022-11-15T04:06:16Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "unknown"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.2825823,
+            36.4989877
+          ],
+          [
+            127.2830377,
+            36.4993481
+          ],
+          [
+            127.2831342,
+            36.4992913
+          ],
+          [
+            127.2833055,
+            36.4991985
+          ],
+          [
+            127.283485,
+            36.4990942
+          ],
+          [
+            127.2836908,
+            36.4989827
+          ],
+          [
+            127.2838672,
+            36.4988871
+          ],
+          [
+            127.2840401,
+            36.4987935
+          ],
+          [
+            127.2842002,
+            36.4987101
+          ],
+          [
+            127.284273,
+            36.4986673
+          ],
+          [
+            127.2843159,
+            36.498622
+          ],
+          [
+            127.2843239,
+            36.4985811
+          ],
+          [
+            127.2843078,
+            36.4985444
+          ],
+          [
+            127.2836983,
+            36.4980545
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-1113205040",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 03 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113205040",
+        "sourceUpdatedAt": "2022-11-15T04:06:16Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "unknown"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.2817432,
+            36.498792
+          ],
+          [
+            127.2816541,
+            36.4986577
+          ],
+          [
+            127.2815602,
+            36.4985025
+          ],
+          [
+            127.2815226,
+            36.4983364
+          ],
+          [
+            127.2815195,
+            36.4982332
+          ],
+          [
+            127.2815226,
+            36.4981984
+          ],
+          [
+            127.2815441,
+            36.4980475
+          ],
+          [
+            127.2815518,
+            36.498027
+          ],
+          [
+            127.2816004,
+            36.4978966
+          ],
+          [
+            127.2816369,
+            36.4978484
+          ],
+          [
+            127.2816836,
+            36.4977866
+          ],
+          [
+            127.2817524,
+            36.4977281
+          ],
+          [
+            127.2817971,
+            36.4977268
+          ],
+          [
+            127.2820085,
+            36.4978926
+          ],
+          [
+            127.2829647,
+            36.4986679
+          ],
+          [
+            127.283485,
+            36.4990942
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-1113205041",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 04 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113205041",
+        "sourceUpdatedAt": "2022-11-15T02:26:59Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "unknown"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.2820085,
+            36.4978926
+          ],
+          [
+            127.2821331,
+            36.4978306
+          ],
+          [
+            127.2822443,
+            36.4978023
+          ],
+          [
+            127.2822732,
+            36.4977949
+          ],
+          [
+            127.2825231,
+            36.497778
+          ],
+          [
+            127.2827519,
+            36.4977874
+          ],
+          [
+            127.2828471,
+            36.4978023
+          ],
+          [
+            127.2830041,
+            36.4978268
+          ],
+          [
+            127.2833006,
+            36.4979357
+          ],
+          [
+            127.2836605,
+            36.4980861
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-1113205042",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 05 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113205042",
+        "sourceUpdatedAt": "2022-11-15T02:26:59Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "unknown"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.2822443,
+            36.4978023
+          ],
+          [
+            127.2831372,
+            36.4985236
+          ],
+          [
+            127.2836908,
+            36.4989827
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-1113205043",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 06 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113205043",
+        "sourceUpdatedAt": "2022-11-15T02:26:59Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "unknown"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.2825231,
+            36.497778
+          ],
+          [
+            127.2832727,
+            36.4984104
+          ],
+          [
+            127.2838672,
+            36.4988871
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-1113205044",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 07 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113205044",
+        "sourceUpdatedAt": "2022-11-15T02:26:59Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "unknown"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.2828471,
+            36.4978023
+          ],
+          [
+            127.2834137,
+            36.4982925
+          ],
+          [
+            127.2840401,
+            36.4987935
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-1113205045",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 08 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113205045",
+        "sourceUpdatedAt": "2022-11-15T02:26:59Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "unknown"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.2835635,
+            36.4981672
+          ],
+          [
+            127.2842002,
+            36.4987101
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-1113205046",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 09 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113205046",
+        "sourceUpdatedAt": "2022-11-15T02:26:59Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "unknown"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.2832719,
+            36.4977343
+          ],
+          [
+            127.2831625,
+            36.4976986
+          ],
+          [
+            127.2829317,
+            36.497661
+          ],
+          [
+            127.2826848,
+            36.4976496
+          ],
+          [
+            127.282449,
+            36.4976512
+          ],
+          [
+            127.2821949,
+            36.497679
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-1113205047",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 10 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113205047",
+        "sourceUpdatedAt": "2022-11-15T02:26:59Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "forward"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.2832719,
+            36.4977343
+          ],
+          [
+            127.2833413,
+            36.4976251
+          ],
+          [
+            127.2837479,
+            36.4977672
+          ],
+          [
+            127.2838749,
+            36.4979068
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-1113205048",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 11 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113205048",
+        "sourceUpdatedAt": "2022-11-15T02:26:59Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "forward"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.283824,
+            36.4979494
+          ],
+          [
+            127.283569,
+            36.497831
+          ],
+          [
+            127.2832719,
+            36.4977343
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-1113222977",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 12 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113222977",
+        "sourceUpdatedAt": "2022-11-15T04:06:16Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "unknown"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.2816369,
+            36.4978484
+          ],
+          [
+            127.2828213,
+            36.4987878
+          ],
+          [
+            127.2833055,
+            36.4991985
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-1113222978",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 13 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113222978",
+        "sourceUpdatedAt": "2022-11-15T04:06:16Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "unknown"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.2815518,
+            36.498027
+          ],
+          [
+            127.2826667,
+            36.4989171
+          ],
+          [
+            127.2831342,
+            36.4992913
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aisle-osm-1113222979",
+      "properties": {
+        "kind": "aisle",
+        "label": "통로 14 · 현장 미확인",
+        "source": "OpenStreetMap 주차장 통로 · 통행 가능성 미확인",
+        "sourceUrl": "https://www.openstreetmap.org/way/1113222979",
+        "sourceUpdatedAt": "2022-11-15T04:06:16Z",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null,
+        "direction": "unknown"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.2815195,
+            36.4982332
+          ],
+          [
+            127.282515,
+            36.499044
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "access-osm-8329518945",
+      "properties": {
+        "kind": "access",
+        "label": "도로 접속 후보 1 · 입출구 미확인",
+        "source": "OSM 통로와 도로의 공유 절점 · 접속 후보로 해석",
+        "sourceUrl": "https://www.openstreetmap.org/node/8329518945",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.2823845,
+          36.4991257
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "access-osm-8329518946",
+      "properties": {
+        "kind": "access",
+        "label": "도로 접속 후보 2 · 입출구 미확인",
+        "source": "OSM 통로와 도로의 공유 절점 · 접속 후보로 해석",
+        "sourceUrl": "https://www.openstreetmap.org/node/8329518946",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.2838749,
+          36.4979068
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "access-osm-8329518954",
+      "properties": {
+        "kind": "access",
+        "label": "도로 접속 후보 3 · 입출구 미확인",
+        "source": "OSM 통로와 도로의 공유 절점 · 접속 후보로 해석",
+        "sourceUrl": "https://www.openstreetmap.org/node/8329518954",
+        "mapVersion": 2,
+        "verification": "unverified",
+        "accuracyMeters": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.2817432,
+          36.498792
+        ]
+      }
+    }
+  ]
+}
