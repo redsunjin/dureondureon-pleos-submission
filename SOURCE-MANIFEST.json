@@ -7,11 +7,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "63f6d5695c2c5ec1d80a71af9bbb9f69a273086b445241e9740a5059fbeb6378"
+      "sha256": "c47b58e604d6b02a87ed5ee523dc3c6d5d1d46fc35850e17e196d4081b94160a"
     },
     {
       "path": "VALIDATION.md",
-      "sha256": "39155efd6a89905350f9d1cf5656fad79c145d671682b548f7d92247f10a0bee"
+      "sha256": "4752c72e85e9257a6317038a024ea82f0fa4ff9af6b81afdc59f3f8a0117d5fb"
     },
     {
       "path": "android/app/build.gradle.kts",
@@ -374,8 +374,68 @@
       "sha256": "2488b7d3132963aac62e40205e50156bbdb04912b54dbb3a482afa04ac7c3749"
     },
     {
+      "path": "docs/screen-guide.md",
+      "sha256": "55288402dcb6fac30899799d126e78af75b7f07f6be336de76ec1234d2084c37"
+    },
+    {
+      "path": "docs/ui-candidate/README.md",
+      "sha256": "ed42c786a4e995fce060fd1425ab5caddf91e5094826c63caf62bf76c9c25f7a"
+    },
+    {
+      "path": "docs/ui-candidate/changes.patch",
+      "sha256": "7506f6f304c2621411d1b6ee3c45e0a44df2934e557436eee4a102fa8886999e"
+    },
+    {
+      "path": "docs/ui-candidate/validation.json",
+      "sha256": "a7bdf572dc41c409feac595a29228f74281c1c9c84580e928e3b52da6cb9eabf"
+    },
+    {
       "path": "media/dureondureon-demo-draft.mp4",
       "sha256": "56bd2433031ff257b09501214d660ad8ee99e962cdf86ee7d61a57f819e655e5"
+    },
+    {
+      "path": "media/screens/02-awaiting-app.png",
+      "sha256": "914b9663100ce060aba8ccd59ec94e3508bfeaaf3690ce482ebde36fa0693098"
+    },
+    {
+      "path": "media/screens/02-awaiting.png",
+      "sha256": "1f7707730cdf7b25bd0e1613a58ff7cafcaa49ac83018036fa15efe2a46d813b"
+    },
+    {
+      "path": "media/screens/03-ready.png",
+      "sha256": "f0acaa1678cdbbb688f0730f78f9a85ab143767dca38a8d202d4af7c715c802b"
+    },
+    {
+      "path": "media/screens/04-running.png",
+      "sha256": "0567f25e182bbb820c50e28a36b9c8bfd1e487e767ecd934781bbe273f3e0b13"
+    },
+    {
+      "path": "media/screens/05-stopped.png",
+      "sha256": "aa3f12713048c6832058c22b8088781cd05d093832e8e74e4394397bbc879ce9"
+    },
+    {
+      "path": "media/screens/06-completed-app.png",
+      "sha256": "788865f20f6d6e88af8826fce48076a62962c4c2557aacd87c0492d6fd42b250"
+    },
+    {
+      "path": "media/screens/06-completed.png",
+      "sha256": "b7679d79f1b784d9289d74f173efb149edcfa5a041d12c2af67a0829896330c9"
+    },
+    {
+      "path": "media/screens/07-reconsent.png",
+      "sha256": "7c665eb7263b19f9b1799e0c4da912f3cfe7079d423140e6ec6eef890a93b8eb"
+    },
+    {
+      "path": "media/screens/08-disconnected.png",
+      "sha256": "79cb9f56465c5b60f2c2ae014b8a0b724ee7fea558f125bbee3159a73778b047"
+    },
+    {
+      "path": "media/screens/osm-location-review.png",
+      "sha256": "33ba04e5919fa5054f5ecfa83c1f9edd3f6e7eb5cc9061a9c6ccd3ebc3f871f8"
+    },
+    {
+      "path": "media/screens/web-parking-dashboard.png",
+      "sha256": "520b8e6aeaece4730068ac8b964a6b29431f699eba1b6c96d077c84e195938e6"
     },
     {
       "path": "media/signed-release-completed.png",
@@ -471,5 +531,12 @@
   "installationVerified": true,
   "runtimeVerifiedToday": true,
   "runtimeScope": "Pleos emulator install, startup, 4/5 blocked, 5/5 approval and full parking completion; no physical vehicle",
-  "apkSha256": "560e6b30a2116dd318223e6948dfacd6467ddccb41bb7b471943407a6d9c959e"
+  "apkSha256": "560e6b30a2116dd318223e6948dfacd6467ddccb41bb7b471943407a6d9c959e",
+  "signedApkSourceBaseline": "7ebda6c3c7db156ee96675793f3fe54ff8bc0e93",
+  "screenEvidence": {
+    "guide": "docs/screen-guide.md",
+    "uiCandidatePatch": "docs/ui-candidate/changes.patch",
+    "uiCandidateMerged": false,
+    "uiCandidateSignedReleaseInstalled": false
+  }
 }

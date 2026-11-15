@@ -4,6 +4,20 @@
 
 현대자동차그룹 차량용 앱 개발 공모전 제출 준비를 위한 공개 소스 저장소입니다. 기술 프로젝트명은 Swarm Mobility OS입니다.
 
+## 화면으로 보는 기능
+
+웹 관제는 전체 구역·공간 상태를 살피고 선택 공간을 안내하는 역할, 차량 앱은 이동 요청을 확인하고 동의·협력 주차를 시연하는 역할입니다. 두 화면은 서로 다른 가상 모델이며 실제 주차장을 제어하는 하나의 통합 서비스로 연결하지 않았습니다.
+
+**기존 웹 관제 구현** — 가상 3구역·18공간과 선택 상세 패널의 보존 캡처입니다. 배경은 제작한 가상 그림이며 과거 캡처의 숫자는 현재 운영 실적이 아닙니다.
+
+![웹 관제 전체 배치](media/screens/web-parking-dashboard.png)
+
+**차량 앱 UI 개선 후보** — 2026-11-15 개발용 앱에서 직접 실행한 화면입니다. 현재 `apk/`의 서명 release와 루트 Android 소스는 이전 UI를 유지하며, 새 UI의 release는 서명·설치 확인 전입니다.
+
+![개선 앱 UI 후보 동의 화면](media/screens/02-awaiting-app.png)
+
+[상태별 캡처와 지도 출처·화면 역할](docs/screen-guide.md) · [개선 후보 변경분과 검증 범위](docs/ui-candidate/README.md)
+
 ## 제출 APK
 
 - 서명된 release: [`apk/redsunjin_두런두런_release.apk`](apk/redsunjin_두런두런_release.apk)

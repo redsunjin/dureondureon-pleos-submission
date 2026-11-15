@@ -1,0 +1,404 @@
+--- a/android/app/src/main/java/io/swarm/mobility/CurbActivity.kt
++++ b/android/app/src/main/java/io/swarm/mobility/CurbActivity.kt
+@@ -9,6 +9,10 @@
+ import android.util.Log
+ import android.view.WindowInsets
+ import android.view.View
++import android.graphics.Color
++import android.graphics.drawable.GradientDrawable
++import android.content.res.ColorStateList
++import android.view.Gravity
+ import android.widget.Button
+ import android.widget.LinearLayout
+ import android.widget.ProgressBar
+@@ -32,6 +36,18 @@
+     private var generation=0
+     private var error: String?=null
+     private var actionNotice: String?=null
++    private val ink=Color.rgb(23,56,61)
++    private val muted=Color.rgb(83,107,108)
++    private val accent=Color.rgb(9,108,89)
++    private var selectedVehicle="NEW"
++    private lateinit var nextHint: TextView
++    private lateinit var selectedTitle: TextView
++    private lateinit var selectedInfo: TextView
++    private lateinit var ownApprove: Button
++    private lateinit var ownReject: Button
++    private lateinit var ownWithdraw: Button
++    private lateinit var testReset: Button
++    private val selectors=mutableMapOf<String,Button>()
+     private lateinit var notice: TextView
+     private lateinit var planContext: TextView
+     private lateinit var replan: Button
+@@ -59,52 +75,73 @@
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         if(!BuildConfig.CURB_DEMO_ENABLED) { finish();return }
+-        val scroll=ScrollView(this).apply { id=R.id.curb_scroll;setBackgroundColor(getColor(R.color.swarm_background)) }
++        val scroll=ScrollView(this).apply { id=R.id.curb_scroll;setBackgroundColor(Color.rgb(245,248,244)) }
+         scroll.setOnApplyWindowInsetsListener { view,insets ->
+-            if(Build.VERSION.SDK_INT>=30) {
+-                val safe=insets.getInsets(WindowInsets.Type.systemBars() or WindowInsets.Type.displayCutout())
+-                view.setPadding(safe.left,safe.top,safe.right,safe.bottom)
+-            } else {
+-                @Suppress("DEPRECATION")
+-                view.setPadding(insets.systemWindowInsetLeft,insets.systemWindowInsetTop,insets.systemWindowInsetRight,insets.systemWindowInsetBottom)
+-            };insets
+-        }
+-        val body=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL;setPadding(dp(20),dp(12),dp(20),dp(24)) }
+-        scroll.addView(body)
+-        body.addView(text("협력 평행주차 · 차량별 요청과 동의",24f))
+-        body.addView(text("가상 차량 5대 · 각 차량의 응답을 대신 입력하는 테스트 화면입니다.",14f))
+-        body.addView(text("실제 차량 제어 없음 · 관제의 시뮬레이션 상태를 4배속으로 표시",14f))
+-        connection=text("관제 연결 확인 중",15f);status=text("계획 확인 대기",17f);progress=text("",15f)
+-        notice=text("",14f);planContext=text("",14f)
+-        body.addView(connection);body.addView(status);body.addView(notice);body.addView(planContext);body.addView(progress)
+-        trafficInfo=text("이동 장애물 관측 미설정",14f);body.addView(trafficInfo)
+-        val actions=LinearLayout(this)
+-        create=button("초기 배치로 새 계획") { act("create") }
+-        replan=button("현재 배치에서 재계획") { act("replan") }
+-        listOf(replan,create).forEach { actions.addView(it,LinearLayout.LayoutParams(0,-2,1f)) };body.addView(actions)
+-        val runActions=LinearLayout(this)
+-        start=button("주차 시뮬레이션 시작") { act("start") }
+-        stop=button("모든 이동 중단") { act("stop") }
+-        listOf(start,stop).forEach { runActions.addView(it,LinearLayout.LayoutParams(0,-2,1f)) };body.addView(runActions)
+-        body.addView(text("‘초기 배치로 새 계획’은 처음으로 되돌립니다. 재계획은 현재 위치를 유지합니다.",13f))
+-        board=CurbRoadView(this);body.addView(board,LinearLayout.LayoutParams(-1,dp(205)))
+-        body.addView(text("가상 변화 시험 · 장애물 (16.0, 5.9)m / 크기 0.25m · NEW는 마지막 수신 위치에서 y +0.15m",13f))
++            if(Build.VERSION.SDK_INT>=30) { val safe=insets.getInsets(WindowInsets.Type.systemBars() or WindowInsets.Type.displayCutout());view.setPadding(safe.left,safe.top,safe.right,safe.bottom) }
++            else { @Suppress("DEPRECATION") view.setPadding(insets.systemWindowInsetLeft,insets.systemWindowInsetTop,insets.systemWindowInsetRight,insets.systemWindowInsetBottom) };insets
++        }
++        val body=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL;setPadding(dp(28),dp(20),dp(28),dp(28)) };scroll.addView(body)
++        val header=LinearLayout(this).apply { gravity=Gravity.CENTER_VERTICAL }
++        header.addView(text("두런두런  /  협력 주차",25f),LinearLayout.LayoutParams(0,-2,1f))
++        header.addView(text("가상 시연 · 실제 차량 제어 없음",17f))
++        header.addView(button("돌아가기") { finish() }.apply { textSize=17f },LinearLayout.LayoutParams(dp(140),dp(56)))
++        body.addView(header)
++        connection=text("관제 연결 확인 중",17f);body.addView(connection)
++        status=text("협력 주차를 준비하세요",34f).apply { setTypeface(typeface,android.graphics.Typeface.BOLD) };body.addView(status)
++        nextHint=text("계획 확인 대기",21f);body.addView(nextHint)
++        notice=text("",18f);body.addView(notice)
++        val workspace=LinearLayout(this).apply { orientation=if(resources.configuration.screenWidthDp>=900)LinearLayout.HORIZONTAL else LinearLayout.VERTICAL;setPadding(0,dp(20),0,dp(16)) }
++        val left=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL }
++        left.addView(text("주차 배치  ·  가상 로컬 좌표",20f))
++        board=CurbRoadView(this).apply { onVehicleSelected={ selectedVehicle=it;render() } }
++        left.addView(board,LinearLayout.LayoutParams(-1,dp(if(resources.configuration.screenWidthDp>=900)420 else 270)))
++        left.addView(text("파란색: 내 차   ·   초록색: 주변 차량   ·   점선: 계획 경로",17f))
++        val selectRow=LinearLayout(this)
++        for(id in listOf("NEW","P-1","P-2","P-3","P-4")) {
++            val selector=button(if(id=="NEW")"내 차" else id) { selectedVehicle=id;render() };selector.textSize=18f
++            selectors[id]=selector;selectRow.addView(selector,LinearLayout.LayoutParams(0,dp(56),1f).apply { rightMargin=dp(6) })
++        };left.addView(selectRow)
++        progress=text("",19f);left.addView(progress)
++        val right=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL;setPadding(dp(24),dp(22),dp(24),dp(22));background=panel(Color.WHITE) }
++        right.addView(text("선택한 차량",17f))
++        selectedTitle=text("내 차",30f);right.addView(selectedTitle)
++        selectedInfo=text("계획을 확인하고 있습니다.",20f);right.addView(selectedInfo)
++        ownApprove=button("내 차 동의") { act("approve",selectedVehicle) };ownReject=button("참여 거부") { act("reject",selectedVehicle) };ownWithdraw=button("동의 철회") { act("withdraw",selectedVehicle) }
++        right.addView(ownApprove,LinearLayout.LayoutParams(-1,dp(64)))
++        val responseRow=LinearLayout(this);responseRow.addView(ownReject,LinearLayout.LayoutParams(0,dp(56),1f));responseRow.addView(ownWithdraw,LinearLayout.LayoutParams(0,dp(56),1f));right.addView(responseRow)
++        right.addView(text("계획 진행",17f).apply { setPadding(0,dp(20),0,dp(6)) })
++        create=button("초기 계획 만들기") { act("create") };start=button("주차 시작") { act("start") };replan=button("현재 위치에서 재계획") { act("replan") };stop=button("■  모든 이동 중단") { act("stop") }
++        listOf(create,start,replan,stop).forEach { right.addView(it,LinearLayout.LayoutParams(-1,dp(64)).apply { topMargin=dp(8) }) }
++        styleAction(start,accent);styleAction(create,accent);styleAction(replan,accent);styleAction(ownApprove,accent);styleAction(stop,Color.rgb(162,56,44))
++        if(workspace.orientation==LinearLayout.HORIZONTAL){workspace.addView(left,LinearLayout.LayoutParams(0,-2,1.9f));workspace.addView(right,LinearLayout.LayoutParams(0,-2,1f).apply{leftMargin=dp(24)})}
++        else{workspace.addView(left);workspace.addView(right,LinearLayout.LayoutParams(-1,-2).apply{topMargin=dp(16)})}
++        body.addView(workspace)
++        trafficInfo=text("이동 장애물 관측 미설정",18f);body.addView(trafficInfo)
++        val tests=disclosure(body,"시험용 차량 응답 · 가상 차량을 대신 조작")
++        tests.addView(text("선택한 차량의 요청을 확인하고 각각 응답하세요. 전원 동의 후에도 시작은 별도입니다.",18f))
++        container=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL };tests.addView(container)
++        val environment=disclosure(body,"장애물 시험 · 상세 상태")
++        environment.addView(text("아래 버튼은 실제 센서 입력이 아닌 가상 변화 시험입니다.",18f))
+         val observationActions=LinearLayout(this)
+-        listOf("장애물 추가(시험)" to "obstacle","NEW 위치 변경(시험)" to "vehicle","장애물 제거(시험)" to "clear").forEach { (label,kind)->
+-            val b=button(label) { act("observe",kind) };observationButtons.add(b)
+-            observationActions.addView(b,LinearLayout.LayoutParams(0,-2,1f))
+-        };body.addView(observationActions)
+-        body.addView(text("이동 시험 · 보행자/차량은 정해진 가상 궤적으로 통과 · 위험 해소 후에도 재계획·재동의 필요",13f))
++        listOf("장애물 추가" to "obstacle","내 차 위치 변경" to "vehicle","장애물 제거" to "clear").forEach { (label,kind)->val b=button(label) { act("observe",kind) };observationButtons.add(b);observationActions.addView(b,LinearLayout.LayoutParams(0,dp(60),1f)) };environment.addView(observationActions)
+         val trafficActions=LinearLayout(this)
+-        listOf("보행자 횡단(시험)" to "pedestrian","이동 차량 접근(시험)" to "vehicle","이동 관측 비우기(시험)" to "clear").forEach { (label,kind)->
+-            val b=button(label) { act("traffic",kind) };trafficButtons.add(b)
+-            trafficActions.addView(b,LinearLayout.LayoutParams(0,-2,1f))
+-        };body.addView(trafficActions)
+-        body.addView(text("차량별 요청 · 공간 확보 후 주차·간격 재정렬까지 포함",16f))
+-        container=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL };body.addView(container)
+-        refresh=button("협력 상태 다시 확인") { fetch() };body.addView(refresh)
+-        body.addView(button("기존 화면으로") { finish() })
++        listOf("보행자 횡단" to "pedestrian","이동 차량 접근" to "vehicle","위험 해소 관측" to "clear").forEach { (label,kind)->val b=button(label) { act("traffic",kind) };trafficButtons.add(b);trafficActions.addView(b,LinearLayout.LayoutParams(0,dp(60),1f)) };environment.addView(trafficActions)
++        planContext=text("",18f);environment.addView(planContext)
++        environment.addView(text("새 초기 시험은 처음 배치로 돌아갑니다. 재계획은 중단 위치를 유지합니다.",18f))
++        testReset=button("초기 배치로 새 시험") { act("create") };environment.addView(testReset)
++        refresh=button("관제 상태 다시 확인") { fetch() };environment.addView(refresh)
+         setContentView(scroll);scroll.requestApplyInsets()
++    }
++    private fun panel(color: Int)=GradientDrawable().apply { setColor(color);cornerRadius=dp(12).toFloat();setStroke(dp(1),Color.rgb(215,226,219)) }
++    private fun styleAction(button: Button,color: Int) {
++        button.backgroundTintList=ColorStateList(arrayOf(intArrayOf(-android.R.attr.state_enabled),intArrayOf()),intArrayOf(Color.rgb(225,232,226),color))
++        button.setTextColor(ColorStateList(arrayOf(intArrayOf(-android.R.attr.state_enabled),intArrayOf()),intArrayOf(Color.rgb(113,128,125),Color.WHITE)))
++    }
++    private fun disclosure(body: LinearLayout,title: String): LinearLayout {
++        val content=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL;visibility=View.GONE;setPadding(dp(16),dp(12),dp(16),dp(16)) }
++        val toggle=button("＋  $title") { content.visibility=if(content.visibility==View.GONE)View.VISIBLE else View.GONE }
++        toggle.gravity=Gravity.CENTER_VERTICAL or Gravity.LEFT;toggle.setOnClickListener { val open=content.visibility!=View.VISIBLE;content.visibility=if(open)View.VISIBLE else View.GONE;toggle.text="${if(open)"−" else "＋"}  $title" }
++        body.addView(toggle,LinearLayout.LayoutParams(-1,dp(60)).apply { topMargin=dp(10) });body.addView(content);return content
+     }
+     override fun onStart() {
+         super.onStart();if(!BuildConfig.CURB_DEMO_ENABLED)return
+@@ -115,8 +152,13 @@
+         // No hidden resume: after heartbeat loss the server freezes its last persisted frame.
+     }
+     override fun onDestroy() { worker.shutdownNow();super.onDestroy() }
+-    private fun text(value: String,size: Float)=TextView(this).apply { text=value;textSize=size;setTextColor(getColor(R.color.swarm_text)) }
+-    private fun button(value: String, action: ()->Unit)=Button(this).apply { text=value;contentDescription=value;textSize=14f;setOnClickListener { action() } }
++    private fun text(value: String,size: Float)=TextView(this).apply { text=value;textSize=size;setTextColor(ink);setPadding(0,dp(5),0,dp(5)) }
++    private fun button(value: String, action: ()->Unit)=Button(this).apply {
++        text=value;contentDescription=value;textSize=20f;isAllCaps=false;minHeight=dp(56)
++        backgroundTintList=ColorStateList(arrayOf(intArrayOf(-android.R.attr.state_enabled),intArrayOf()),intArrayOf(Color.rgb(237,241,236),Color.rgb(224,235,226)))
++        setTextColor(ColorStateList(arrayOf(intArrayOf(-android.R.attr.state_enabled),intArrayOf()),intArrayOf(Color.rgb(113,128,125),ink)))
++        setOnClickListener { action() }
++    }
+     private fun dp(v: Int)=(v*resources.displayMetrics.density).toInt()
+     private fun fetch() { request(null) }
+     private fun act(action: String,id: String?=null) {
+@@ -169,14 +211,14 @@
+         if(cardsSession==s?.id && (s!=null || cards.isEmpty()))return
+         cardsSession=s?.id;cards.clear();container.removeAllViews()
+         s?.vehicles?.forEach { v ->
+-            val box=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL;setPadding(dp(12),dp(5),dp(12),dp(5));setBackgroundColor(getColor(R.color.swarm_surface)) }
+-            box.addView(text("${v.id} · ${v.role}",17f))
++            val box=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL;setPadding(dp(12),dp(5),dp(12),dp(5));background=panel(Color.WHITE) }
++            box.addView(text("${v.id} · ${v.role}",22f))
+             val steps=v.steps.filter { abs(it.distance)>0.001 }.joinToString(" → ") {
+                 val direction=if(it.distance>=0)"앞으로" else "뒤로"
+                 String.format(Locale.US,"%s %s %.2fm",CurbLabels.stage(it.stage),direction,abs(it.distance))
+             }.ifEmpty { "추가 이동 없음 · 현재 위치 유지에 재동의" }
+-            box.addView(text("이동 요청: $steps",14f))
+-            val state=text("동의 대기",15f);box.addView(state)
++            box.addView(text("이동 요청: $steps",19f))
++            val state=text("동의 대기",19f);box.addView(state)
+             val gauge=ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal).apply { max=100 };box.addView(gauge,LinearLayout.LayoutParams(-1,dp(6)))
+             val buttons=LinearLayout(this)
+             val approve=button("${v.id} ${if(s.replanGeneration>0) "재동의" else "동의"}") { act("approve",v.id) }
+@@ -187,21 +229,36 @@
+             cards[v.id]=Card(state,gauge,approve,reject,withdraw)
+         }
+     }
+-    private fun TextView.display(value: String) { if(text.toString()!=value)text=value }
++    private fun renderOverview(s: CurbSession?,fresh: Boolean,locked: Boolean,now: Long) {
++        val approved=s?.vehicles?.count { it.decision=="approved" } ?: 0
++        status.display(when { !fresh->"관제 연결을 확인해 주세요";s==null->"협력 주차를 준비하세요";s.status=="awaiting"->"차량 동의를 확인하세요";s.status=="ready"->"모든 차량이 준비됐습니다";s.status=="completed"->"주차가 완료됐습니다";s.status in setOf("stopped","rejected","expired")->"이동을 중단했습니다";else->when(s.stage){"create_space"->"주차 공간을 확보하고 있습니다";"settle_spacing"->"차량 간격을 정리하고 있습니다";else->"내 차가 주차하고 있습니다"} })
++        nextHint.display(when { !fresh->"최신 상태를 받기 전까지 시작할 수 없습니다.";s==null->"초기 계획을 만들면 차량별 이동 요청이 표시됩니다.";s.status=="awaiting"->"$approved / ${s.vehicles.size}대 동의 · 각 차량의 요청을 확인해 주세요.";s.status=="ready"->"전원 동의 완료 · 주차 시작을 눌러 주세요.";s.status=="completed"->"주차와 주변 차량 간격 정렬을 확인했습니다.";s.status in setOf("stopped","expired","rejected")->CurbLabels.reason(s.reason);else->"${if(s.actor=="NEW")"내 차" else s.actor ?: "차량"} · ${CurbLabels.stage(s.stage)} · 필요하면 모든 이동을 중단하세요." })
++        if(locked && preferences.getString("pending",null)?.let { runCatching { JSONObject(it).optString("action") }.getOrNull() }=="replan")nextHint.display("현재 배치에서 경로를 다시 계산합니다 · 차량 위치 유지")
++        create.visibility=if(s==null || s.status=="completed")View.VISIBLE else View.GONE
++        start.visibility=if(s?.status in setOf("awaiting","ready","running"))View.VISIBLE else View.GONE
++        replan.visibility=if(s?.status in setOf("stopped","rejected","expired"))View.VISIBLE else View.GONE
++        stop.visibility=View.VISIBLE
++        testReset.isEnabled=CurbUiPolicy.allowed(snapshot,connected,locked,now,"create")
++        val car=s?.vehicles?.find { it.id==selectedVehicle }
++        selectedTitle.display(if(car==null)"내 차" else if(car.id=="NEW")"내 차 · 새 차량" else "${car.id} · 주변 차량 시험 응답")
++        val decision=when(car?.decision){"approved"->"✓ 동의 완료";"rejected"->"참여 거부";"withdrawn"->"동의 철회";else->"응답 대기"}
++        selectedInfo.display(car?.let { "$decision\n"+it.steps.filter { abs(it.distance)>.001 }.joinToString("\n") { step->String.format(Locale.US,"%s %.2fm · %s",if(step.distance<0)"후진" else "전진",abs(step.distance),CurbLabels.stage(step.stage)) }.ifEmpty { "추가 이동 없이 위치 유지" } } ?: "새 계획에서 이동 요청을 확인하세요.")
++        ownApprove.display(if(selectedVehicle=="NEW")"내 차 ${if((s?.replanGeneration ?: 0)>0)"재동의" else "동의"}" else "$selectedVehicle ${if((s?.replanGeneration ?: 0)>0)"재동의" else "동의"}")
++        for((b,action) in listOf(ownApprove to "approve",ownReject to "reject",ownWithdraw to "withdraw"))b.isEnabled=CurbUiPolicy.allowed(snapshot,connected,locked,now,action,selectedVehicle)
++        selectors.forEach { (id,b)-> b.isSelected=id==selectedVehicle;b.backgroundTintList=ColorStateList.valueOf(if(id==selectedVehicle)accent else Color.rgb(224,235,226));b.setTextColor(if(id==selectedVehicle)Color.WHITE else ink);b.setTypeface(null,if(id==selectedVehicle)android.graphics.Typeface.BOLD else android.graphics.Typeface.NORMAL) }
++        progress.display(s?.let { String.format(Locale.US,"동의 %d/%d대   ·   공간 %.2f → %.2fm%s",approved,it.vehicles.size,it.initialGap,it.openingGap,it.completedGaps()?.let { g->String.format(Locale.US,"   ·   앞/뒤 여유 %.2f / %.2fm",g.second,g.first) } ?: "") } ?: "가상 차량 5대 · 계획 확인 전")
++    }
++    private fun TextView.display(value: String) { if(text.toString()!=value) { text=value;if(this is Button)contentDescription=value } }
+     private fun render() {
+         if(!::status.isInitialized)return
+         val now=SystemClock.elapsedRealtime();val s=snapshot?.session
+         val fresh=CurbUiPolicy.fresh(snapshot,connected,now)
+         val locked=preferences.contains("pending")
+         connection.display(when { !connected -> error ?: "관제 연결 확인 중"; !fresh -> "상태 수신 지연 · 마지막 화면 유지";else -> "관제 연결됨 · 가상 차량 상태 수신" })
+-        status.display(if(s!=null && !fresh) "새 상태 수신 대기 · 마지막 위치 유지 · 이동 중단 확인 필요" else s?.let { CurbLabels.reason(it.reason) } ?: "새 계획을 만들면 차량별 이동 요청이 표시됩니다.")
+-        if(locked && preferences.getString("pending",null)?.let { runCatching { JSONObject(it).optString("action") }.getOrNull() }=="replan")
+-            status.display("현재 배치에서 경로 재계산 중 · 차량 위치 유지")
+         notice.visibility=if(actionNotice==null)View.GONE else View.VISIBLE
+         notice.display(actionNotice.orEmpty())
+         planContext.display((if((s?.replanGeneration ?: 0)>0) "현재 배치 재계획 ${s!!.replanGeneration}회 · 이전 동의 사용 안 함 · 진행률은 남은 이동 기준" else "초기 배치 계획")+
+             (s?.let { " · 환경 변경 ${it.environmentRevision}회 · 장애물 ${it.obstacles.size}개 · 점선은 새 차량 계획 경로" } ?: ""))
+-        val approved=s?.vehicles?.count { it.decision=="approved" } ?: 0
+         trafficInfo.display(s?.traffic?.let { t->
+             val safety=when(t.safety) {
+                 "risk"->"충돌 위험 예상 · ${t.riskId ?: "이동 장애물"}"+(t.timeToRisk?.let { String.format(Locale.US," · 가상 %.1f초 이내",it) } ?: "")+" · 중단 유지"
+@@ -213,14 +270,6 @@
+             safety+(if(t.source=="scripted")" · 가상 시험 궤적" else if(t.source=="observed")" · 입력 관측" else "")+
+                 (if(t.tracks.isNotEmpty())"\n"+t.tracks.joinToString(" / ") { o->String.format(Locale.US,"%s x %.1f y %.1f · 속도 (%.1f, %.1f)m/s",if(o.kind=="pedestrian")"보행자" else "이동 차량",o.pose.x,o.pose.y,o.vx,o.vy) } else "")
+         } ?: "이동 장애물 관측 미설정")
+-        progress.display(s?.let {
+-            val geometry=if(it.replanGeneration>0)String.format(Locale.US,"현재 주차 구간 %.2fm",it.initialGap)
+-                else String.format(Locale.US,"확보 %.2f→%.2fm",it.initialGap,it.openingGap)
+-            String.format(Locale.US,"%s %d/%d · %s · 이동 %s · 가상 %.1f/%.1f초 · %s",
+-                if(it.replanGeneration>0)"재동의" else "동의",approved,it.vehicles.size,CurbLabels.stage(it.stage),
+-                it.actor ?: "없음",it.elapsed,it.duration,geometry) +
+-                (it.completedGaps()?.let { g->String.format(Locale.US," · 완료 간격 뒤 %.2fm / 앞 %.2fm",g.first,g.second) } ?: "")
+-        } ?: "")
+         create.isEnabled=CurbUiPolicy.allowed(snapshot,connected,locked,now,"create")
+         replan.isEnabled=CurbUiPolicy.allowed(snapshot,connected,locked,now,"replan")
+         start.isEnabled=CurbUiPolicy.allowed(snapshot,connected,locked,now,"start")
+@@ -228,7 +277,8 @@
+         refresh.isEnabled=!locked
+         observationButtons.forEach { it.isEnabled=CurbUiPolicy.allowed(snapshot,connected,locked,now,"observe") }
+         trafficButtons.forEach { it.isEnabled=CurbUiPolicy.allowed(snapshot,connected,locked,now,"traffic") }
+-        rebuild(s);board.show(s,fresh)
++        rebuild(s);board.selectedVehicle=selectedVehicle;board.show(s,fresh)
++        renderOverview(s,fresh,locked,now)
+         s?.vehicles?.forEach { v ->
+             val card=cards[v.id] ?: return@forEach
+             val decision=when(v.decision) { "approved"->if(s.replanGeneration>0)"재동의 완료" else "동의 완료";"rejected"->"거부";"withdrawn"->"동의 철회";else->if(s.replanGeneration>0)"재동의 대기" else "동의 대기" }
+--- a/android/app/src/main/java/io/swarm/mobility/CurbRoadView.kt
++++ b/android/app/src/main/java/io/swarm/mobility/CurbRoadView.kt
+@@ -7,71 +7,120 @@
+ import android.graphics.RectF
+ import android.graphics.DashPathEffect
+ import android.graphics.Path
++import android.view.MotionEvent
+ import android.view.View
+ import java.util.Locale
+-import kotlin.math.min
++import kotlin.math.*
+ 
+ /** The road and every car pose come from the server's simulator frame, never GPS. */
+ class CurbRoadView(context: Context): View(context) {
+     private val paint=Paint(Paint.ANTI_ALIAS_FLAG)
++    private val density=resources.displayMetrics.density
++    private val font=resources.displayMetrics.scaledDensity
+     private var session: CurbSession?=null
+-    init { setLayerType(LAYER_TYPE_SOFTWARE,null);contentDescription="협력 주차 모형 · 계획 대기" }
+     private var fresh=false
++    var selectedVehicle="NEW"
++        set(value) { if(field!=value) { field=value;invalidate() } }
++    var onVehicleSelected: ((String)->Unit)?=null
++    init { setLayerType(LAYER_TYPE_SOFTWARE,null);isClickable=true;contentDescription="협력 주차 모형 · 계획 대기" }
+     fun show(value: CurbSession?, isFresh: Boolean) {
+-        if(session?.vehicles==value?.vehicles && session?.obstacles==value?.obstacles && session?.traffic==value?.traffic && session?.plannedPath==value?.plannedPath && session?.stage==value?.stage && session?.actor==value?.actor && fresh==isFresh)return
++        val unchanged=session==value && fresh==isFresh
+         session=value;fresh=isFresh
+         contentDescription=value?.let { s->
+             "${if(isFresh) "협력 주차 모형" else "마지막 수신 모형"} · ${CurbLabels.stage(s.stage)} · 이동 ${s.actor ?: "없음"} · "+
+                 (s.vehicles.find { it.id=="NEW" }?.pose?.let { p->String.format(Locale.US,"새 차량 x %.2f y %.2f 방향 %.3f",p.x,p.y,p.yaw) } ?: "")+" · 장애물 ${s.obstacles.size}개 · 이동 장애물 ${s.traffic.tracks.size}개 · 계획 경로 ${s.plannedPath.size}점"
+         } ?: "협력 주차 모형 · 계획 대기"
+-        invalidate()
++        if(!unchanged)invalidate()
++    }
++    private data class Frame(val scale: Float,val ox: Float,val oy: Float)
++    private fun frame(s: CurbSession): Frame {
++        val scale=min((width-40*density)/s.roadLength.toFloat(),(height-100*density)/s.roadWidth.toFloat()).coerceAtLeast(1f)
++        return Frame(scale,((width-s.roadLength*scale)/2).toFloat(),((height+s.roadWidth*scale)/2-8*density).toFloat())
++    }
++    override fun performClick(): Boolean { super.performClick();return true }
++    override fun onTouchEvent(event: MotionEvent): Boolean {
++        if(event.action==MotionEvent.ACTION_UP) {
++            performClick()
++            session?.let { s->
++                val f=frame(s)
++                val wx=(event.x-f.ox)/f.scale;val wy=(f.oy-event.y)/f.scale
++                s.vehicles.asReversed().find { c->
++                    val dx=wx-c.pose.x;val dy=wy-c.pose.y
++                    abs(dx*cos(c.pose.yaw)+dy*sin(c.pose.yaw))<=c.length/2 &&
++                        abs(-dx*sin(c.pose.yaw)+dy*cos(c.pose.yaw))<=c.width/2
++                }?.let { onVehicleSelected?.invoke(it.id) }
++            };return true
++        }
++        return event.action==MotionEvent.ACTION_DOWN
+     }
+     override fun onDraw(canvas: Canvas) {
+-        super.onDraw(canvas);canvas.drawColor(Color.rgb(27,43,53))
+-        val s=session ?: return
+-        val scale=min((width-32f)/s.roadLength.toFloat(),(height-34f)/s.roadWidth.toFloat())
+-        val ox=(width-s.roadLength*scale)/2;val oy=(height+s.roadWidth*scale)/2-7
+-        fun x(v: Double)=(ox+v*scale).toFloat()
+-        fun y(v: Double)=(oy-v*scale).toFloat()
+-        paint.style=Paint.Style.FILL;paint.color=Color.rgb(32,65,64)
++        super.onDraw(canvas)
++        paint.style=Paint.Style.FILL;paint.color=Color.rgb(232,240,234)
++        canvas.drawRoundRect(0f,0f,width.toFloat(),height.toFloat(),12*density,12*density,paint)
++        paint.textSize=18*font;paint.textAlign=Paint.Align.LEFT;paint.color=Color.rgb(73,102,98)
++        val s=session
++        if(s==null) { canvas.drawText("계획을 만들면 차량 배치가 표시됩니다.",24*density,height/2f,paint);return }
++        val f=frame(s);val scale=f.scale
++        fun x(v: Double)=(f.ox+v*scale).toFloat()
++        fun y(v: Double)=(f.oy-v*scale).toFloat()
++        paint.color=Color.rgb(250,252,249)
++        canvas.drawRect(x(0.0),y(s.roadWidth),x(s.roadLength),y(0.0),paint)
++        paint.color=Color.rgb(215,229,216)
+         canvas.drawRect(x(0.0),y(2.8),x(s.roadLength),y(0.0),paint)
+-        paint.color=Color.rgb(160,190,198);paint.strokeWidth=2f
++        paint.color=Color.rgb(119,149,137);paint.strokeWidth=2*density
+         canvas.drawLine(x(0.0),y(0.0),x(s.roadLength),y(0.0),paint)
+-        paint.textSize=12f;canvas.drawText("연석 · 진행 방향 →",x(0.0)+4,y(0.0)+16,paint)
++        paint.textSize=16*font;canvas.drawText("주차 구간  ·  연석",x(0.0),y(0.0)+28*density,paint)
++        paint.textAlign=Paint.Align.RIGHT
++        canvas.drawText("도로 진행 방향  →",x(s.roadLength),y(s.roadWidth)-18*density,paint)
++        paint.textAlign=Paint.Align.LEFT
++        val rear=s.vehicles.find { it.id=="P-2" };val front=s.vehicles.find { it.id=="P-3" }
++        if(rear!=null && front!=null) {
++            val a=rear.pose.x+rear.length/2;val b=front.pose.x-front.length/2
++            if(b>a) {
++                paint.color=Color.rgb(188,215,194)
++                canvas.drawRect(x(a),y(2.8),x(b),y(0.0),paint)
++                paint.color=Color.rgb(9,108,89);paint.textSize=17*font;paint.textAlign=Paint.Align.CENTER
++                canvas.drawText(String.format(Locale.US,"주차 공간 %.2fm",b-a),x((a+b)/2),y(0.0)+54*density,paint)
++                paint.textAlign=Paint.Align.LEFT
++            }
++        }
+         if(s.plannedPath.size>1) {
+             val path=Path();s.plannedPath.forEachIndexed { i,p->if(i==0)path.moveTo(x(p.x),y(p.y)) else path.lineTo(x(p.x),y(p.y)) }
+-            paint.style=Paint.Style.STROKE;paint.color=Color.rgb(250,208,107);paint.strokeWidth=2f;paint.pathEffect=DashPathEffect(floatArrayOf(7f,5f),0f)
++            paint.style=Paint.Style.STROKE;paint.color=Color.rgb(178,127,40);paint.strokeWidth=2*density;paint.pathEffect=DashPathEffect(floatArrayOf(8*density,6*density),0f)
+             canvas.drawPath(path,paint);paint.pathEffect=null;paint.style=Paint.Style.FILL
+         }
+         for(o in s.obstacles) {
+             canvas.save();canvas.translate(x(o.pose.x),y(o.pose.y));canvas.rotate((-Math.toDegrees(o.pose.yaw)).toFloat())
+-            paint.color=Color.rgb(242,120,101)
++            paint.color=Color.rgb(184,79,53)
+             canvas.drawRect((-o.length*scale/2).toFloat(),(-o.width*scale/2).toFloat(),(o.length*scale/2).toFloat(),(o.width*scale/2).toFloat(),paint)
+-            paint.textSize=12f;canvas.drawText("장애물",4f,-8f,paint);canvas.restore()
++            canvas.restore();paint.color=Color.rgb(147,49,31);paint.textSize=16*font;canvas.drawText("장애물",x(o.pose.x)+6*density,y(o.pose.y)-12*density,paint)
+         }
+         for(o in s.traffic.tracks) {
+-            paint.color=if(s.traffic.safety=="risk")Color.rgb(255,126,106) else Color.rgb(242,198,98)
+-            paint.strokeWidth=2f
++            paint.color=if(s.traffic.safety=="risk")Color.rgb(184,66,42) else Color.rgb(178,127,40)
++            paint.strokeWidth=2*density
+             canvas.drawLine(x(o.pose.x),y(o.pose.y),x(o.predictedPose.x),y(o.predictedPose.y),paint)
+             canvas.save();canvas.translate(x(o.pose.x),y(o.pose.y));canvas.rotate((-Math.toDegrees(o.pose.yaw)).toFloat())
+             val l=(o.length*scale).toFloat();val w=(o.width*scale).toFloat()
+-            if(o.kind=="pedestrian")canvas.drawCircle(0f,0f,kotlin.math.max(l,w)/2,paint)
+-            else canvas.drawRoundRect(RectF(-l/2,-w/2,l/2,w/2),3f,3f,paint)
+-            canvas.restore();paint.textSize=12f
+-            canvas.drawText(if(o.kind=="pedestrian")"보행자 → 예상" else "이동 차량 → 예상",x(o.pose.x)+5,y(o.pose.y)-8,paint)
++            if(o.kind=="pedestrian")canvas.drawCircle(0f,0f,max(l,w)/2,paint)
++            else canvas.drawRoundRect(RectF(-l/2,-w/2,l/2,w/2),3*density,3*density,paint)
++            canvas.restore();paint.textSize=16*font
++            canvas.drawText(if(o.kind=="pedestrian")"보행자 · 예상" else "이동 차량 · 예상",x(o.pose.x)+6*density,y(o.pose.y)-12*density,paint)
+         }
+         for(c in s.vehicles) {
+             canvas.save();canvas.translate(x(c.pose.x),y(c.pose.y));canvas.rotate((-Math.toDegrees(c.pose.yaw)).toFloat())
+-            paint.color=when { c.decision in setOf("rejected","withdrawn") -> Color.rgb(235,139,119)
+-                c.id=="NEW" -> Color.rgb(98,184,252);c.decision=="approved" -> Color.rgb(118,217,179)
+-                else -> Color.rgb(149,164,173) }
+-            val l=(c.length*scale).toFloat();val w=(c.width*scale).toFloat()
+-            canvas.drawRoundRect(RectF(-l/2,-w/2,l/2,w/2),5f,5f,paint)
+-            paint.color=Color.rgb(20,43,54);canvas.drawRect(-l*.15f,-w*.35f,l*.23f,w*.35f,paint)
+-            paint.textSize=12f;paint.textAlign=Paint.Align.CENTER
+-            canvas.drawText(if(c.id=="NEW")"내 차" else c.id,-l*.32f,4f,paint)
+-            paint.color=Color.WHITE;canvas.drawRect(l*.41f,-w*.3f,l*.43f,w*.3f,paint)
++            val l=(c.length*scale).toFloat();val w=(c.width*scale).toFloat();val rect=RectF(-l/2,-w/2,l/2,w/2)
++            if(c.id==selectedVehicle) {
++                paint.color=Color.rgb(25,63,68);paint.style=Paint.Style.STROKE;paint.strokeWidth=3*density
++                canvas.drawRoundRect(RectF(rect).apply { inset(-5*density,-5*density) },7*density,7*density,paint);paint.style=Paint.Style.FILL
++            }
++            paint.color=when { c.decision in setOf("rejected","withdrawn")->Color.rgb(178,85,68);c.id=="NEW"->Color.rgb(43,111,156);c.decision=="approved"->Color.rgb(28,124,100);else->Color.rgb(117,143,132) }
++            canvas.drawRoundRect(rect,5*density,5*density,paint)
++            paint.color=Color.argb(75,255,255,255);canvas.drawRoundRect(RectF(l*.05f,-w*.33f,l*.28f,w*.33f),2*density,2*density,paint)
++            paint.textSize=18*font;paint.textAlign=Paint.Align.CENTER;paint.color=Color.WHITE;paint.isFakeBoldText=true
++            canvas.drawText(if(c.id=="NEW")"내 차" else c.id,-l*.12f,-(paint.ascent()+paint.descent())/2,paint)
++            paint.isFakeBoldText=false;paint.color=Color.rgb(246,235,189);canvas.drawRect(l*.41f,-w*.3f,l*.43f,w*.3f,paint)
+             paint.textAlign=Paint.Align.LEFT;canvas.restore()
+         }
++        if(!fresh) { paint.color=Color.rgb(151,66,38);paint.textSize=18*font;canvas.drawText("마지막 수신 배치 · 최신 상태 확인 필요",20*density,28*density,paint) }
+     }
+ }
