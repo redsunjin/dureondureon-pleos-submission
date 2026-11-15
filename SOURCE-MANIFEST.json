@@ -315,7 +315,7 @@
     },
     {
       "path": "coordination/server.py",
-      "sha256": "eadeec898f1d2e5481ef07f130f4aaf065fad80c0e4ae6c749018e0d2778679a"
+      "sha256": "610d5b7ffa4b9f1da9d7f1aab4a8e2dba1d8c270fe96c1f05386e0cc2f9bfb3d"
     },
     {
       "path": "coordination/site_map.py",
@@ -356,6 +356,10 @@
     {
       "path": "coordination/test_execution_traffic.py",
       "sha256": "53600893f6a1f86a61f7e6c30aec7188349728c52b4676171263a175de6663f8"
+    },
+    {
+      "path": "coordination/test_loopback_security.py",
+      "sha256": "71be84893bfe71c6789778a3356d1cc69ceeb3d4662b1a828b67598153d23cfc"
     },
     {
       "path": "coordination/test_participation.py",
@@ -553,5 +557,12 @@
   },
   "submittedCommit": "a60c96191074050de562e4ef8d2d24f8cea3478b",
   "submittedTag": "submission-2026-11-15",
-  "postSubmissionDocumentation": true
+  "postSubmissionDocumentation": true,
+  "postSubmissionSecurityCandidate": {
+    "mergedIntoSubmittedSnapshot": false,
+    "coordinationTests": 208,
+    "newBoundaryTests": 7,
+    "nativeReleaseRetested": false,
+    "apkReplaced": false
+  }
 }
